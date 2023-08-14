@@ -7,3 +7,10 @@
 {
     height: 20%;
 }
+
+.profile_img {
+    max-width: 80px;
+    max-height: 80px;
+    border-radius: 50%;
+    border: 1px solid black;
+}
