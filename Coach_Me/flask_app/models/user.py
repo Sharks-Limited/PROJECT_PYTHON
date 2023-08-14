@@ -15,14 +15,16 @@ class User:
         self.password = data_dict['password']
         self.role = data_dict['role']
         self.is_valid = data_dict['is_valid']
+        self.is_banned = data_dict['is_banned']        
+        self.is_blocked = data_dict['is_blocked']
         self.picture = data_dict['picture']
         self.created_at = data_dict['created_at']
         self.updated_at = data_dict['updated_at']
 
     @classmethod
     def create_user(cls, data_dict):
-        query = """INSERT INTO users (first_name, last_name, email, password,role,is_valid,picture)
-                    VALUES (%(first_name)s,%(last_name)s,%(email)s,%(password)s,%(role)s,%(is_valid)s,%(picture)s);"""
+        query = """INSERT INTO users (first_name, last_name, email, password,role,is_valid,picture,is_blocked,is_banned)
+                    VALUES (%(first_name)s,%(last_name)s,%(email)s,%(password)s,%(role)s,%(is_valid)s,%(picture)s,0,0);"""
         return connectToMySQL(DATABASE_NAME).query_db(query, data_dict)
     
     @classmethod
@@ -51,6 +53,7 @@ class User:
                 coachs.append(coach)
             return coachs
         return False
+    
     @classmethod
     def get_valid_coachs(cls):
         query="""SELECT * from users where role='c' and is_valid=1;"""
@@ -62,6 +65,19 @@ class User:
                 coach = cls(row)
                 coachs.append(coach)
             return coachs
+        return False
+    
+    @classmethod
+    def get_all_users(cls):
+        query="""SELECT * from users where role='u';"""
+        results = connectToMySQL(DATABASE_NAME).query_db(query)
+        users = []
+        if results:
+            for row in results:
+                
+                user = cls(row)
+                users.append(user)
+            return users
         return False
     
     @classmethod

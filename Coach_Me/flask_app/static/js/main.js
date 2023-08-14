@@ -1,26 +1,45 @@
-function user_user_measures() {
-    var selectedOption = document.getElementById("options");
-    var allDivs = document.querySelectorAll(".hidden");
-    var hidden_file = document.getElementById("hidden_file");
+// Load the selected role from Local Storage on page load
+window.addEventListener('load', function() {
+    var selectedOption = localStorage.getItem('selectedRole');
+    if (selectedOption) {
+        var selectElement = document.getElementsByName("role")[0];
+        selectElement.value = selectedOption;
+        user_user_measures();
+    }
+});
 
-    if (selectedOption.value == "u") {
+// Save the selected role to Local Storage when the selection changes
+function user_user_measures() {
+    var selectedOption = document.getElementsByName("role")[0];
+    var allDivs = document.querySelectorAll(".hidden");
+    var hiddenFile = document.getElementById("hidden_file");
+
+    for (var i = 0; i < allDivs.length; i++) {
+        allDivs[i].style.display = "none";
+    }
+
+    if (selectedOption.value === "u") 
+    {
         for (var i = 0; i < allDivs.length; i++) {
             allDivs[i].style.display = "block";
         }
+        hiddenFile.style.display = "block";
     } 
-    if (selectedOption.value == "c" || selectedOption.value == "a")
+    else if (selectedOption.value === "c")
     {
+        hiddenFile.style.display = "block";
+        for (var i = 0; i < allDivs.length; i++) {
+            allDivs[i].style.display = "none";
+        }
+    }
+    else
+    {
+        hiddenFile.style.display = "none";
         for (var i = 0; i < allDivs.length; i++) {
             allDivs[i].style.display = "none";
         }
     }
 
-    if(selectedOption.value == "a")
-    {
-        hidden_file.style.display = "none";
-    }
-    else
-    {
-        hidden_file.style.display = "block";
-    }
+    localStorage.setItem('selectedRole', selectedOption.value);
 }
+
