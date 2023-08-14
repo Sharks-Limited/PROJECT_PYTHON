@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <title>Edit Program</title>
+</head>
+
+<body>
+    <div class="container p-2">
+        <div class="d-flex justify-content-between">
+            <h2>Edit my program</h2>
+            <div class="d-flex gap-2">
+                <a href="/dashboard_coach" class="btn btn-primary">My Programs</a>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <div class="col-7">
+                <form action="/programs/{{program.id}}/update" method="post">
+                    <div class="form-group mb-3">
+                        <label for="">Program Name :</label>
+                        <input type="text" class="form-control" name="program_name" value="{{program.name_of_program}}">
+                        {% for message in get_flashed_messages(category_filter=["program_name"]) %}
+                        <span class="text-danger">{{message}}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="">Program for:</label>
+                        <select name="bmi" id="" class="form-control">
+                            <option value="">--Select your category--</option>
+                            <option value="{{program.bmi.id}}" selected>
+                                {{program.bmi.min_range}}-{{program.bmi.max_range}} | {{program.bmi.category_name}}
+                            </option>
+                            {%for bmi in bmis%}
+                            <option value="{{bmi.id}}">{{bmi.min_range}}-{{bmi.max_range}} | {{bmi.category_name}}
+                            </option>
+                            {%endfor%}
+                        </select>
+                        {% for message in get_flashed_messages(category_filter=["bmi"]) %}
+                        <span class="text-danger">{{message}}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="">Duration:(week)</label>
+                        <input type="number" class="form-control" name="duration" value="{{program.duration}}">
+                        {% for message in get_flashed_messages(category_filter=["duration"]) %}
+                        <span class="text-danger">{{message}}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="">Description</label>
+                        <textarea name="description" id="" cols="30" rows="4"
+                            class="form-control">{{program.description_of_program}}</textarea>
+                        {% for message in get_flashed_messages(category_filter=["description"]) %}
+                        <span class="text-danger">{{message}}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="d-block form-group mb-3">
+                        <label>Days Name :</label>
+                        {%for day in program.days%}
+                        <input type="text" name="day_{{loop.index}}" id="" value="{{day.body_name_day}}">
+                        {%if day.day_off==1%}
+                        <input type="checkbox" name="day_off_{{loop.index}}" id="" checked> Day off
+                        {%else%}
+                        <input type="checkbox" name="day_off_{{loop.index}}" id=""> Day off
+                        {%endif%}
+                        {%endfor%}
+                        {% for message in get_flashed_messages(category_filter=["day_{{loop.index}}"]) %}
+                        <span class="text-danger">{{message}}</span>
+                        {% endfor %}
+                    </div>
+
+                    <input type="submit" value="Update" class="btn btn-lg btn-info">
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin</title>
+</head>
+
+<body>
+    <div>
+        <h1>Welcome: Admin!</h1>
+        <form action="/logout" method="post">
+            <input type="submit" value="Logout" class="btn btn-danger">
+        </form>
+
+
+    </div>
+
+
+    <button>Rules</button>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi labore a recusandae quia perspiciatis sunt
+        praesentium non nisi. Natus molestias vitae eaque placeat porro, dicta inventore consectetur totam. Id,
+        exercitationem deserunt. Quo exercitationem, asperiores aperiam optio esse explicabo veritatis, at labore
+        reiciendis sed repudiandae molestias voluptas. Nesciunt adipisci, repudiandae rerum vero, autem cupiditate
+        doloribus magni ducimus quia tempore quaerat ea, quam voluptatibus recusandae nam maxime eos numquam modi iure?
+        Quidem magnam doloribus, molestias veritatis dolorum non dolore incidunt ea quibusdam molestiae ducimus ipsa
+        ipsum minus culpa officiis eaque voluptas a mollitia! Nostrum consectetur nobis ex veniam totam id nesciunt
+        illum! Facere excepturi quod consectetur voluptate ab cum ex, nisi corrupti maiores velit sint rem, deleniti,
+        distinctio dolorem dignissimos porro quibusdam magnam. Corrupti distinctio similique id eaque nostrum ea sit
+        vero praesentium unde animi maxime aliquid obcaecati voluptates eveniet quae iste, nisi blanditiis? Quisquam ab
+        temporibus velit impedit. Perferendis porro dicta voluptatem neque, iste voluptates ea, vero eaque reprehenderit
+        laudantium maiores! Distinctio ut a aperiam cupiditate quisquam maxime quo explicabo accusantium. Distinctio
+        vero animi commodi repellat sed earum harum iure a recusandae, provident impedit sequi architecto labore iusto.
+        Voluptatibus dolore, numquam atque non, eum iure impedit odit voluptatum ut laudantium reprehenderit.
+    </p>
+
+    <h2>Coaches on standby</h2>
+    <!-- coaches stand by -->
+    <table>
+        
+        <tr>
+            <th>Coach to validate</th>
+            <th>Actions</th>
+
+        </tr>
+        <!-- those buttons Acccept or decline  new coaches -->
+        {%if invalid_coachs!=False%}
+        {%for coach in invalid_coachs%}
+        <tr>
+            <td>{{coach.first_name}} {{coach.last_name}}</td>
+            <td>
+                <form action="/users/validate" method="post">
+                    <input type="hidden" name="coach_id" value="{{coach.id}}">
+                    <input type="submit" value="Validate" class="btn btn-danger">
+                </form>
+                <form action="/users/delete" method="post">
+                    <input type="hidden" name="coach_id" value="{{coach.id}}">
+                    <input type="submit" value="Decline" class="btn btn-danger">
+                </form>
+            </td>
+        </tr>
+        {%endfor%}
+        {%else%}
+        <tr>
+            <td>No request</td>
+        </tr>
+        {%endif%}
+    </table>
+    <!-- accepted coaches-->
+    <h2>Existing coaches</h2>
+    <table>
+        <tr>
+            <th>Coaches</th>
+            <th>Actions</th>
+        </tr>
+        <!-- those buttons block or ban existing coaches -->
+        <tr>
+            <td>Coach Name</td>
+            <td>
+                <a href="">
+                    <button>Block</button>
+
+                </a>
+
+
+                <a href="">
+                    <button>ban</button>
+                </a>
+            </td>
+
+        </tr>
+        <tr>
+            <td>Coach Name</td>
+            <td>
+                <a href=""> <button>block</button> </a>
+                <a href=""><button>ban</button></a>
+            </td>
+
+        </tr>
+        <tr>
+            <td>Coach Name</td>
+            <td>
+                <a href="">
+                    <button>block</button>
+
+                </a>
+
+
+                <a href=""> <button>ban</button>
+                </a>
+
+            </td>
+
+        </tr>
+    </table>
+
+    <!-- enregistred users -->
+    <table>
+        <h2>All users</h2>
+        <tr>
+            <th>Enrolled</th>
+            <th>Actions</th>
+
+        </tr>
+        <!-- those buttons block or ban existing enrolled -->
+        <tr>
+            <td>Enrolled Name</td>
+            <td>
+                <button>block</button>
+                <button>ban</button>
+            </td>
+
+        </tr>
+    </table>
+
+
+
+
+
+
+</body>
+
+</html>

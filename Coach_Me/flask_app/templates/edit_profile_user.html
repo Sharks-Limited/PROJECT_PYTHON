@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit profile</title>
+
+</head>
+
+<body>
+    <div class="container">
+        <h1>Edit My Profile</h1>
+
+        <!--This form redirect to my_program.html after the necessary validation-->
+        
+        <form action="/my_program.html" method="post">
+            <label for="profile-photo">Profile Photo:</label>
+            <input type="file" id="profile-photo" name="profile" accept="image/*">
+            <label for="first-name">First Name:</label>
+            <input type="text" id="first-name" name="firstName" value="{{user.first_name}}">
+            <label for="last-name">Last Name:</label>
+            <input type="text" id="last-name" name="lastName" value="{{user.last_name}}">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="{{user.email}}">
+
+            <label for="password">Password:</label>
+            <input type="password" name="password" value="{{user.password}}" value="ENTER plz the confir password">
+            <label for="email">Confirm Password:</label>
+            <input type="password" name="confirm_password">
+
+
+            <input type="submit" value="Save Changes">
+        </form>
+    </div>
+
+
+
+</body>
+
+</html>

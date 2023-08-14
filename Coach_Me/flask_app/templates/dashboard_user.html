@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard user</title>
+  <style>
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .card {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      background-color: #fff;
+      width: 300px;
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .card-description {
+      color: #555;
+      margin-bottom: 15px;
+    }
+
+    .card-duration,
+    .created_by,
+    .number_of_enrolled {
+      font-weight: bold;
+    }
+
+    span {
+      style: none;
+    }
+  </style>
+  <title>List of Programs</title>
+</head>
+
+<body>
+
+  <div>
+    <h1 style="display: inline-block; margin-right: 250px;">Welcome: User!</h1>
+    <!--This button redirect to edit_profil_user.html-->
+
+    <form action="/logout" method="post">
+      <input type="submit" value="Logout" class="btn btn-danger">
+    </form>
+
+
+  </div>
+  <div class="card-container">
+    <div class="card">
+      <div class="card-title">Total Body Transformation</div>
+      <div class="program_for">Program_for: Under_weight</div>
+      <div class="card-duration">Duration: 8 weeks</div>
+
+      <div class="card-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum, possimus,
+        repudiandae, obcaecati eaque iure recusandae earum hic iusto non accusantium ex eum est culpa omnis! Temporibus
+        error sequi cumque facere, magni, placeat adipisci molestiae a illo ipsam quis exercitationem nam similique nemo
+        sed distinctio ipsa maiores iste dolor sit. Soluta!</div>
+      <div class="created_by">Coach {{coach_id}}</div>
+      <div class="number_of_enrolled">{{number_of_enrolled}}</div>
+      <a href="/my_program.html">
+        <!--This button redirect to my_program.html-->
+        <button style="display: inline-block;">Choose</button>
+
+      </a>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Elite Athlete Development</div>
+      <div class="program_for">Program_for: Obese</div>
+      <div class="card-duration">Duration: 28 weeks</div>
+
+      <div class="card-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum, possimus,
+        repudiandae, obcaecati eaque iure recusandae earum hic iusto non accusantium ex eum est culpa omnis! Temporibus
+        error sequi cumque facere, magni, placeat adipisci molestiae a illo ipsam quis exercitationem nam similique nemo
+        sed distinctio ipsa maiores iste dolor sit. Soluta!</div>
+      <div class="created_by">Coach {{coach_id}}</div>
+      <div class="number_of_enrolled">{{number_of_enrolled}}</div>
+      <a href="/my_program.html">
+        <!--This button redirect to my_program.html-->
+        <button style="display: inline-block;">Choose</button>
+
+      </a>
+    </div>
+    <div class="card">
+      <div class="card-title">Wellness and Vitality Emplowerment</div>
+      <div class="program_for">Program_for: Normal</div>
+      <div class="card-duration">Duration: 12 weeks</div>
+
+      <div class="card-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum, possimus,
+        repudiandae, obcaecati eaque iure recusandae earum hic iusto non accusantium ex eum est culpa omnis! Temporibus
+        error sequi cumque facere, magni, placeat adipisci molestiae a illo ipsam quis exercitationem nam similique nemo
+        sed distinctio ipsa maiores iste dolor sit. Soluta!</div>
+      <div class="created_by">Coach {{coach_id}}</div>
+      <div class="number_of_enrolled">{{number_of_enrolled}}</div>
+      <a href="/my_program.html">
+        <!--This button redirect to my_program.html-->
+
+
+
+
+
+
+
+        <button style="display: inline-block;">Choose</button>
+
+      </a>
+    </div>
+    <div class="card">
+      <div class="card-title">Hardcore Workout</div>
+      <div class="program_for">Program_for: Over_weight</div>
+      <div class="card-duration">Duration: 28 weeks</div>
+
+      <div class="card-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum, possimus,
+        repudiandae, obcaecati eaque iure recusandae earum hic iusto non accusantium ex eum est culpa omnis! Temporibus
+        error sequi cumque facere, magni, placeat adipisci molestiae a illo ipsam quis exercitationem nam similique nemo
+        sed distinctio ipsa maiores iste dolor sit. Soluta!</div>
+      <div class="created_by">Coach {{coach_id}}</div>
+      <div class="number_of_enrolled">{{number_of_enrolled}}</div>
+
+
+      <a href="/my_program.html">
+        <!--This button redirect to my_program.html-->
+
+
+
+
+
+
+
+        <button style="display: inline-block;">Choose</button>
+
+      </a>
+    </div>
+
+  </div>
+
+
+
+
+
+
+</body>
+
+</html>
