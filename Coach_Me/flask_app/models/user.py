@@ -103,6 +103,7 @@ class User:
             flash("Role is required", "role")
             is_valid = False
         if len(data_dict['first_name'])< 2:
+            
             flash("First Name too short", "first_name")
             is_valid = False
         if len(data_dict['last_name'])< 2:
