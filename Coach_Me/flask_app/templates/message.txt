@@ -67,18 +67,12 @@
 
                         <label for="dynamicInput">Height:(cm)</label>
                         <input type="number" id="dynamicInput1" name="height" class="form-control">
-                        {% for message in get_flashed_messages(category_filter=["height"]) %}
-                        <span class="text-danger">{{message}}</span>
-                        {% endfor %}
                     </div>
 
                     <div class="form-group mb-3 hidden" id="dynamicInputContainer">
 
                         <label for="dynamicInput">Weight:(kg)</label>
                         <input type="number" id="dynamicInput2" name="weight" class="form-control">
-                        {% for message in get_flashed_messages(category_filter=["weight"]) %}
-                        <span class="text-danger">{{message}}</span>
-                        {% endfor %}
                     </div>
 
                     <div class="form-group mb-3">
@@ -104,7 +98,7 @@
                     <input type="submit" value="Register" class="btn btn-primary btn-lg w-100">
                 </form>
             </div>
-            <div class="col-5 card shadow p-3 border card_height">
+            <div class="col-5 card shadow p-3 border">
                 <h1 class="text-center text-danger">LOGIN</h1>
                 <form action="/login" method="post">
 

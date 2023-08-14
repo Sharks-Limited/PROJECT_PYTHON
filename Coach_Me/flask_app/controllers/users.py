@@ -54,7 +54,8 @@ def dashboard_admin():
     logged_user = User.get_by_id({'id': session['user_id']})
     invalid_coachs = User.get_invalid_coachs()
     valid_coachs = User.get_valid_coachs()
-    return render_template("dashboard_admin.html",valid_coachs=valid_coachs,invalid_coachs=invalid_coachs, user=logged_user)
+    users = User.get_all_users()
+    return render_template("dashboard_admin.html",users=users,valid_coachs=valid_coachs,invalid_coachs=invalid_coachs, user=logged_user)
 
 # Define route for user registration
 @app.route('/users/create', methods=['POST'])
@@ -67,6 +68,8 @@ def register():
         # Handle uploaded profile picture
         if request.form['role'] in ["c", "u"] and uploaded_file.filename == "":
             flash("Please provide your picture", "file")
+            return redirect('/')
+            
         
         if request.form['role'] in ["c", "u"] and uploaded_file.filename != "":
             pic = 'flask_app/static/img/' + uploaded_file.filename
@@ -141,6 +144,13 @@ def login():
 
 @app.route('/users/validate',methods=['POST'])
 def validate_coach():
+    if 'user_id' not in session:
+        return redirect('/')
+    User.validate_coach({'id':request.form['coach_id']})
+    return redirect('/dashboard_admin')
+
+@app.route('/users/validate',methods=['POST'])
+def block_coach():
     if 'user_id' not in session:
         return redirect('/')
     User.validate_coach({'id':request.form['coach_id']})
