@@ -43,3 +43,12 @@ function user_user_measures() {
     localStorage.setItem('selectedRole', selectedOption.value);
 }
 
+function toggleInput(checkbox, inputId) {
+    const input = document.getElementById(inputId);
+    if (checkbox.checked) {
+        input.disabled = true;
+        input.value = ''; 
+    } else {
+        input.disabled = false;
+    }
+}

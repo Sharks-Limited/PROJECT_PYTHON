@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <title>Create Program</title>
 </head>
 
@@ -58,66 +60,73 @@
                         {% endfor %}
                     </div>
                     <div class="d-block form-group mb-3">
-                        <label >Days Name :</label>
+                        <label>Days Name :</label>
                         <div class="d-flex gap-5">
-                            <input type="text" name="day_1">
+                            <input type="text" name="day_1" id="textInput1">
                             <div>
-                                <input type="checkbox" name="day_off_1" id=""> Day off
+                                <input type="checkbox" name="day_off_1" onchange="toggleInput(this, 'textInput1')"> Day
+                                off
                             </div>
                         </div>
                         {% for message in get_flashed_messages(category_filter=["day_one"]) %}
                         <span class="text-danger">{{message}}</span>
                         {% endfor %}
-                        
+
                         <div class="d-flex gap-5">
-                            <input type="text" name="day_2">
+                            <input type="text" name="day_2" id="textInput2">
                             <div>
-                                <input type="checkbox" name="day_off_2" id=""> Day off
+                                <input type="checkbox" name="day_off_2" onchange="toggleInput(this, 'textInput2')"> Day
+                                off
                             </div>
                         </div>
                         {% for message in get_flashed_messages(category_filter=["day_two"]) %}
                         <span class="text-danger">{{message}}</span>
                         {% endfor %}
                         <div class="d-flex gap-5">
-                            <input type="text" name="day_3">
+                            <input type="text" name="day_3" id="textInput3">
                             <div>
-                                <input type="checkbox" name="day_off_3" id=""> Day off
+                                <input type="checkbox" name="day_off_3" onchange="toggleInput(this, 'textInput3')"> Day
+                                off
                             </div>
                         </div>
                         {% for message in get_flashed_messages(category_filter=["day_three"]) %}
                         <span class="text-danger">{{message}}</span>
                         {% endfor %}
                         <div class="d-flex gap-5">
-                            <input type="text" name="day_4">
+                            <input type="text" name="day_4" id="textInput4">
                             <div>
-                                <input type="checkbox" name="day_off_4" id=""> Day off
+                                <input type="checkbox" name="day_off_4" onchange="toggleInput(this, 'textInput4')"> Day
+                                off
                             </div>
                         </div>
                         {% for message in get_flashed_messages(category_filter=["day_four"]) %}
                         <span class="text-danger">{{message}}</span>
                         {% endfor %}
                         <div class="d-flex gap-5">
-                            <input type="text" name="day_5">
+                            <input type="text" name="day_5" id="textInput5">
                             <div>
-                                <input type="checkbox" name="day_off_5" id=""> Day off
+                                <input type="checkbox" name="day_off_5" onchange="toggleInput(this, 'textInput5')"> Day
+                                off
                             </div>
                         </div>
                         {% for message in get_flashed_messages(category_filter=["day_five"]) %}
                         <span class="text-danger">{{message}}</span>
                         {% endfor %}
                         <div class="d-flex gap-5">
-                            <input type="text" name="day_6">
+                            <input type="text" name="day_6" id="textInput6">
                             <div>
-                                <input type="checkbox" name="day_off_6" id=""> Day off
+                                <input type="checkbox" name="day_off_6" onchange="toggleInput(this, 'textInput6')"> Day
+                                off
                             </div>
                         </div>
                         {% for message in get_flashed_messages(category_filter=["day_six"]) %}
                         <span class="text-danger">{{message}}</span>
                         {% endfor %}
                         <div class="d-flex gap-5">
-                            <input type="text" name="day_7">
+                            <input type="text" name="day_7" id="textInput7">
                             <div>
-                                <input type="checkbox" name="day_off_7" id=""> Day off
+                                <input type="checkbox" name="day_off_7" onchange="toggleInput(this, 'textInput7')"> Day
+                                off
                             </div>
                         </div>
                         {% for message in get_flashed_messages(category_filter=["day_seven"]) %}

@@ -48,9 +48,14 @@ def create_program():
                 day_off = 1
             else:
                 day_off = 0
+            
+            if f'day_{i}' not in request.form:
+                day_name = ''
+            else:
+                day_name = request.form[f'day_{i}']
             data_days = {
                 'program_id': program_id,
-                'body_name_day': request.form[f'day_{i}'],
+                'body_name_day': day_name,
                 'day_off': day_off,
             }
             Day.create_program_days(data_days)
@@ -96,25 +101,27 @@ def update_program(program_id):
     if Program.validate_program(request.form):
         data_program = {
             'id': program_id,
-            'bmi_id': request.form['bmi'],
             'name_of_program': request.form['program_name'],
             'description_of_program': request.form['description'],
             'duration': request.form['duration'],
         }
         # Update program details
         Program.update_program(data_program)
+        days = Day.get_all_prog_days({'program_id':program_id})
         
-        for i in range(1, 8):
+        for i, day in enumerate(days, start=1):
+            
             if f'day_off_{i}' in request.form:
                 day_off = 1
             else:
                 day_off = 0
             data_days = {
+                'id':day.id,
                 'program_id': program_id,
                 'body_name_day': request.form[f'day_{i}'],
                 'day_off': day_off,
             }
-            # Day.update_program_days(data_days)
+            Day.update_program_days(data_days)
         return redirect('/dashboard_coach')
     return redirect(f"/programs/view/{program_id}")
 

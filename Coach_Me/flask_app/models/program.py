@@ -99,6 +99,7 @@ class Program:
             program.days.append(Day(data_days))
         return program
     
+        
     @classmethod
     def get_one_program(cls,data_dict):
         query="""SELECT * from programs
@@ -113,9 +114,9 @@ class Program:
         if len(data_dict['program_name'])< 2:
             flash("Name of program is too short", "program_name")
             is_valid = False
-        if data_dict['bmi']=="":
-            flash("please provide a category", "bmi")
-            is_valid = False
+        # if data_dict['bmi']=="":
+        #     flash("please provide a category", "bmi")
+        #     is_valid = False
         if len(data_dict['duration'])==0:
             flash("please put a positive number", "duration")
             is_valid = False
@@ -125,54 +126,12 @@ class Program:
         if len(data_dict['description'])<7:
             flash("the description must be more the 7 characters", "description")
             is_valid = False
-        # if data_dict['day_1']=="":
-        #     flash("this day required", "day_1")
-        #     is_valid = False
-        # elif len(data_dict['day_1'])<2:
-        #     flash("the day must be more the 2 characters", "day_1")
-        #     is_valid = False
-        # if data_dict['day_2']=="":
-        #     flash("this day required", "day_2")
-        #     is_valid = False
-        # elif len(data_dict['day_2'])<2:
-        #     flash("the day must be more the 2 characters", "day_2")
-        #     is_valid = False
-        # if data_dict['day_3']=="":
-        #     flash("this day required", "day_3")
-        #     is_valid = False 
-        # elif len(data_dict['day_3'])<2:
-        #     flash("the day must be more the 2 characters", "day_3")
-        #     is_valid = False
-        # if data_dict['day_4']=="":
-        #     flash("this day required", "day_4")
-        #     is_valid = False  
-        # elif len(data_dict['day_4'])<2:
-        #     flash("the day must be more the 2 characters", "day_4")
-        #     is_valid = False
-        # if data_dict['day_5']=="":
-        #     flash("this day required", "day_5")
-        #     is_valid = False
-        # elif len(data_dict['day_5'])<2:
-        #     flash("the day must be more the 2 characters", "day_5")
-        #     is_valid = False
-        # if data_dict['day_6']=="":
-        #     flash("this day required", "day_6")
-        #     is_valid = False 
-        # elif len(data_dict['day_6'])<2:
-        #     flash("the day must be more the 2 characters", "day_6")
-        #     is_valid = False
-        # if data_dict['day_7']=="":
-        #     flash("this day required", "day_7")
-        #     is_valid = False
-        # elif len(data_dict['day_7'])<2:
-        #     flash("the day must be more the 2 characters", "day_7")
-        #     is_valid = False
         return is_valid
 
     
     @classmethod
     def update_program(cls,data_dict):
-        query= """UPDATE programs SET bmi_id=%(bmi_id)s,name_of_program=%(name_of_program)s,
+        query= """UPDATE programs SET name_of_program=%(name_of_program)s,
                     description_of_program=%(description_of_program)s,
                     duration=%(duration)s WHERE id=%(id)s"""
                     
