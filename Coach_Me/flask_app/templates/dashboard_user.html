@@ -57,18 +57,20 @@
 
 
   </div>
+
+
+
   <div class="card-container">
-    <div class="card">
-      <div class="card-title">Total Body Transformation</div>
-      <div class="program_for">Program_for: Under_weight</div>
-      <div class="card-duration">Duration: 8 weeks</div>
 
-      <div class="card-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum, possimus,
-        repudiandae, obcaecati eaque iure recusandae earum hic iusto non accusantium ex eum est culpa omnis! Temporibus
-        error sequi cumque facere, magni, placeat adipisci molestiae a illo ipsam quis exercitationem nam similique nemo
-        sed distinctio ipsa maiores iste dolor sit. Soluta!</div>
+    {% for program in Programs %}
+    <div class="card">
+      <div class="card-title">{{program.name_of_program}}</div>
+      <div class="program_for"></div>
+      <div class="card-duration">{{program.duration}} weeks</div>
+
+      <div class="card-description">{{program.description_of_program}}</div>
       <div class="created_by">Coach {{coach_id}}</div>
-      <div class="number_of_enrolled">{{number_of_enrolled}}</div>
+      <!-- <div class="number_of_enrolled">{{number_of_enrolled}}</div> -->
       <a href="/my_program.html">
         <!--This button redirect to my_program.html-->
         <button style="display: inline-block;">Choose</button>
@@ -76,73 +78,11 @@
       </a>
     </div>
 
-    <div class="card">
-      <div class="card-title">Elite Athlete Development</div>
-      <div class="program_for">Program_for: Obese</div>
-      <div class="card-duration">Duration: 28 weeks</div>
-
-      <div class="card-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum, possimus,
-        repudiandae, obcaecati eaque iure recusandae earum hic iusto non accusantium ex eum est culpa omnis! Temporibus
-        error sequi cumque facere, magni, placeat adipisci molestiae a illo ipsam quis exercitationem nam similique nemo
-        sed distinctio ipsa maiores iste dolor sit. Soluta!</div>
-      <div class="created_by">Coach {{coach_id}}</div>
-      <div class="number_of_enrolled">{{number_of_enrolled}}</div>
-      <a href="/my_program.html">
-        <!--This button redirect to my_program.html-->
-        <button style="display: inline-block;">Choose</button>
-
-      </a>
-    </div>
-    <div class="card">
-      <div class="card-title">Wellness and Vitality Emplowerment</div>
-      <div class="program_for">Program_for: Normal</div>
-      <div class="card-duration">Duration: 12 weeks</div>
-
-      <div class="card-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum, possimus,
-        repudiandae, obcaecati eaque iure recusandae earum hic iusto non accusantium ex eum est culpa omnis! Temporibus
-        error sequi cumque facere, magni, placeat adipisci molestiae a illo ipsam quis exercitationem nam similique nemo
-        sed distinctio ipsa maiores iste dolor sit. Soluta!</div>
-      <div class="created_by">Coach {{coach_id}}</div>
-      <div class="number_of_enrolled">{{number_of_enrolled}}</div>
-      <a href="/my_program.html">
-        <!--This button redirect to my_program.html-->
+    
+    
 
 
-
-
-
-
-
-        <button style="display: inline-block;">Choose</button>
-
-      </a>
-    </div>
-    <div class="card">
-      <div class="card-title">Hardcore Workout</div>
-      <div class="program_for">Program_for: Over_weight</div>
-      <div class="card-duration">Duration: 28 weeks</div>
-
-      <div class="card-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum, possimus,
-        repudiandae, obcaecati eaque iure recusandae earum hic iusto non accusantium ex eum est culpa omnis! Temporibus
-        error sequi cumque facere, magni, placeat adipisci molestiae a illo ipsam quis exercitationem nam similique nemo
-        sed distinctio ipsa maiores iste dolor sit. Soluta!</div>
-      <div class="created_by">Coach {{coach_id}}</div>
-      <div class="number_of_enrolled">{{number_of_enrolled}}</div>
-
-
-      <a href="/my_program.html">
-        <!--This button redirect to my_program.html-->
-
-
-
-
-
-
-
-        <button style="display: inline-block;">Choose</button>
-
-      </a>
-    </div>
+    
 
   </div>
 
