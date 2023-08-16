@@ -106,7 +106,7 @@ def register():
                         'weight': Decimal(weight).quantize(Decimal('0.00'), rounding=ROUND_HALF_UP),
                         'bmi': Decimal(user_bmi).quantize(Decimal('0.00'), rounding=ROUND_HALF_UP)
                     }
-                    User_measure.create_user_measure(data_measures)
+            User_measure.create_user_measure(data_measures)
         
         # Set session information and redirect based on role
         session['user_id'] = user_id
@@ -214,3 +214,9 @@ def update_coach():
     
     User.update_coach(data)
     return redirect('/dashboard_coach')
+
+
+# @app.route('/coachs/block', methods=['POST'])
+# def block_coach():
+#     coach_to_block_ = User.Block(request.form['coach_id'])
+    
