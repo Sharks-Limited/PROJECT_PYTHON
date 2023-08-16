@@ -33,6 +33,8 @@ def dashboard_coach():
     return render_template("dashboard_coach.html", user=logged_user, programs=coach_programs)
 
 # Define route for the user dashboard
+
+
 @app.route('/dashboard_user')
 def dashboard_user():
     # Check user role and session status
@@ -41,6 +43,16 @@ def dashboard_user():
     # Get the logged-in user's information
     logged_user = User.get_by_id({'id': session['user_id']})
     return render_template("dashboard_user.html", user=logged_user)
+
+
+
+
+
+
+
+
+
+
 
 # Define route for the admin dashboard
 @app.route('/dashboard_admin')
@@ -96,6 +108,7 @@ def register():
             weight = float(request.form['weight'])
             height = float(request.form['height'])
             user_bmi = round(weight / ((height / 100) ** 2), 2)
+            
             bmis = Bmi.get_all_bmis()
             for thebmi in bmis:
                 if thebmi.min_range < user_bmi < thebmi.max_range:
@@ -106,6 +119,10 @@ def register():
                         'weight': Decimal(weight).quantize(Decimal('0.00'), rounding=ROUND_HALF_UP),
                         'bmi': Decimal(user_bmi).quantize(Decimal('0.00'), rounding=ROUND_HALF_UP)
                     }
+<<<<<<< HEAD
+=======
+            print(data_measures)
+>>>>>>> a5ff2994c1e17f49cddbc455e82ffc5d97fae99b
             User_measure.create_user_measure(data_measures)
         
         # Set session information and redirect based on role
@@ -145,6 +162,10 @@ def login():
 @app.route('/users/validate',methods=['POST'])
 def validate_coach():
     if 'user_id' not in session:
+
+        return redirect('/')
+    
+    if session['role'] != "a":
         return redirect('/')
     User.validate_coach({'id':request.form['coach_id']})
     return redirect('/dashboard_admin')
@@ -152,6 +173,9 @@ def validate_coach():
 @app.route('/users/validate',methods=['POST'])
 def block_coach():
     if 'user_id' not in session:
+        return redirect('/')
+    
+    if session['role'] != "a":
         return redirect('/')
     User.validate_coach({'id':request.form['coach_id']})
     return redirect('/dashboard_admin')
@@ -168,6 +192,56 @@ def delete_coach():
 def logout():
     session.clear()
     return redirect('/')
+
+
+
+
+#=====================routes for admin page ===========================
+
+
+#===========ban a coach=======
+@app.route('/coachs/ban',methods=['POST'])
+
+def ban():
+
+    if 'user_id' not in session:
+
+        return redirect('/')
+    
+    if session['role'] != "a":
+        return redirect('/')
+    
+    
+
+    User.ban_coach({'id':request.form['coach_id']})
+    return redirect('/dashboard_admin')
+
+
+#===========     unban a coach  =======
+    
+
+@app.route('/coachs/unban',methods=['POST'])
+
+def unban():
+
+    if 'user_id' not in session:
+
+        return redirect('/')
+    
+    if session['role'] != "a":
+        return redirect('/')
+    
+    
+
+    User.unban_coach({'id':request.form['coach_id']})
+    return redirect('/dashboard_admin')
+
+    
+
+
+
+
+
 
 
 
