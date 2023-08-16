@@ -119,10 +119,6 @@ def register():
                         'weight': Decimal(weight).quantize(Decimal('0.00'), rounding=ROUND_HALF_UP),
                         'bmi': Decimal(user_bmi).quantize(Decimal('0.00'), rounding=ROUND_HALF_UP)
                     }
-<<<<<<< HEAD
-=======
-            print(data_measures)
->>>>>>> a5ff2994c1e17f49cddbc455e82ffc5d97fae99b
             User_measure.create_user_measure(data_measures)
         
         # Set session information and redirect based on role
