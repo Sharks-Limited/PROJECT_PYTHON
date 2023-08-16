@@ -31,7 +31,7 @@ class Day:
     
     @classmethod
     def get_all_prog_days(cls,data_dict):
-        query="""SELECT * from days where program_id=%(program_id)s;"""
+        query="""SELECT * from days where program_id=%(program_id)s and day_off=0;"""
         results = connectToMySQL(DATABASE_NAME).query_db(query,data_dict)
         days = []
         for row in results:

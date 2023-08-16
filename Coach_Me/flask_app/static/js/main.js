@@ -52,3 +52,15 @@ function toggleInput(checkbox, inputId) {
         input.disabled = false;
     }
 }
+
+function updateProfilePicture(input) {
+    const file = input.files[0];
+    const profilePicture = document.getElementById('profilePicture');
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+        profilePicture.src = e.target.result;
+    };
+
+    reader.readAsDataURL(file);
+}

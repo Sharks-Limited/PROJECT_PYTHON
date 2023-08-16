@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -127,15 +129,28 @@
                 </td>
                 <td>
                     <div class="d-flex">
+<<<<<<< HEAD
+                        <form action="/coachs/block" method="post">
+=======
+                        {% if coach.is_banned==0 %}
                         <form action="/users/block" method="post">
+>>>>>>> a5ff2994c1e17f49cddbc455e82ffc5d97fae99b
                             <input type="hidden" name="coach_id" value="{{coach.id}}">
                             <input type="submit" value="Block" class="btn btn-info">
                         </form>
-                        <form action="/users/ban" method="post">
+                        <form action="/coachs/ban" method="post">
                             <input type="hidden" name="coach_id" value="{{coach.id}}">
                             <input type="submit" value="Ban" class=" btn btn-danger">
                         </form>
+                        {%else%}
+                        <form action="/coachs/unban" method="post">
+                            <input type="hidden" name="coach_id" value="{{coach.id}}">
+                            <input type="submit" value="Unban" class="btn btn-success">
+                        </form>
+
+                        {%endif%}
                     </div>
+                    
                 </td>
             </tr>
             {%endfor%}
@@ -157,19 +172,18 @@
             {%if users!=False%}
             {%for user in users%}
             <tr>
-                <td>{{coach.first_name}} {{coach.last_name}}</td>
+                <td>{{user.first_name}} {{user.last_name}}</td>
                 <td>
                     <div class="d-flex">
-                        <form action="/users/validate" method="post">
-                            <input type="hidden" name="coach_id" value="{{coach.id}}">
-                            <input type="submit" value="Validate" class="btn btn-info">
-                        </form>
-                        <form action="/users/delete" method="post">
-                            <input type="hidden" name="coach_id" value="{{coach.id}}">
-                            <input type="submit" value="Decline" class=" btn btn-danger">
+                        <form action="/users/show" method="post">
+                            <input type="hidden" name="user" value="{{user.id}}">
+                            <input type="submit" value="Show User" class="btn btn-info">
                         </form>
                     </div>
                 </td>
+
+
+       
             </tr>
             {%endfor%}
             {%else%}
@@ -179,7 +193,9 @@
             {%endif%}
         </table>
     </div>
+    <p>dont forget to create a route for /users/show and template</p>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
+
