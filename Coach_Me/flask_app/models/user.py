@@ -130,3 +130,30 @@ class User:
         
         return is_valid
     
+
+    #==========Validate caoch===========
+    @staticmethod
+    def coach_validate_update(data_dict):
+        is_valid = True
+        if len(data_dict['first_name'])< 2:
+            
+            flash("First Name too short", "first_name")
+            is_valid = False
+        
+        if len(data_dict['last_name'])< 2:
+            flash("Last Name too short .....", "last_name")
+            is_valid = False
+
+        if not EMAIL_REGEX.match(data_dict['email']): 
+            flash("Invalid email address!", "email")
+            is_valid = False
+        return is_valid
+#====================Update Coach==========================
+    @classmethod
+    
+    def update_coach(cls,data):
+        query = "UPDATE users SET first_name = %(first_name)s, last_name = %(last_name)s, email = %(email)s , picture = %(picture)s  WHERE id = %(id)s;"
+        
+        return connectToMySQL(DATABASE_NAME).query_db(query,data)
+        
+    
