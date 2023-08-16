@@ -15,6 +15,7 @@ bcrypt = Bcrypt(app)
 # Define route for the homepage
 @app.route('/')
 def index():
+    session.clear()
     return render_template("index.html")
 
 # Define route for the coach dashboard
@@ -167,3 +168,49 @@ def delete_coach():
 def logout():
     session.clear()
     return redirect('/')
+
+
+
+#=======edit coach get================
+@app.route('/edit_coach')
+def edit_coach():
+    logged_user = User.get_by_id({'id': session['user_id']})
+    return render_template("edit_coach.html",user=logged_user)
+
+
+
+
+#==================edit coach redirect to get
+@app.route('/coach/edit', methods=['POST'])
+def edit():
+    if 'user_id' not in session:
+        return redirect('/')
+    
+    if session['role'] != "c":
+        return redirect('/')
+    return redirect("/edit_coach")
+
+# programs=coach_programs
+
+@app.route('/coach/update', methods=['POST'])
+def update_coach():
+    if 'user_id' not in session:
+        return redirect('/')
+    if not User.coach_validate_update(request.form):
+        return redirect('/edit_coach')
+    uploaded_file = request.files['file']
+    if uploaded_file.filename == "":
+        flash("Please provide your picture", "file")
+        return redirect('/')
+    pic = 'flask_app/static/img/' + uploaded_file.filename
+    uploaded_file.save(pic)
+    print(request.form)
+    
+    data= {
+            **request.form,
+            'picture': pic,
+            'id':session['user_id']
+        }
+    
+    User.update_coach(data)
+    return redirect('/dashboard_coach')
