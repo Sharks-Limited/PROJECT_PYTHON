@@ -40,6 +40,7 @@ def dashboard_user():
         return redirect('/')
     # Get the logged-in user's information
     logged_user = User.get_by_id({'id': session['user_id']})
+    
     return render_template("dashboard_user.html", user=logged_user)
 
 # Define route for the admin dashboard
