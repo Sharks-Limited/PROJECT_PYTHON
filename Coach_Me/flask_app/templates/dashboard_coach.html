@@ -26,12 +26,14 @@
                     {% endif %}
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end">
+                    {%if user.is_banned!=1%}
                     <li>
                         <form action="/coach/edit" method="post" class="dropdown-item">
                             <!-- <input type="hidden" name="user_id" value="{{user.id}}"> -->
                             <input type="submit" value="Edit" class="btn btn-secondary btn-sm">
                         </form>
                     </li>
+                    {% endif %}
                     <li>
                         <form action="/logout" method="post" class="dropdown-item">
                             <input type="submit" value="Logout" class="btn btn-secondary btn-sm">
@@ -45,7 +47,11 @@
     
 
     <hr>
-    {%if user.is_valid==1%}
+    {%if user.is_banned!=0%}
+
+            <p>You are banned </p>
+    
+    {%elif user.is_valid==1%}
     <div class="container">
         <div class="row">
             <table class="table table-striped table-bordered table-hover">
@@ -86,12 +92,7 @@
             <div class="row d-flex justify-content-center align-content-end">
                 <div class="col-6">
                     <div class="card shadow p-4">
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reprehenderit ducimus tenetur
-                        reiciendis praesentium, nemo assumenda necessitatibus. Ipsa cupiditate neque laborum
-                        tempore voluptatem incidunt nemo nam, natus facere vitae aspernatur at.
-                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatem ipsa labore et autem,
-                        delectus vitae voluptatum ratione nulla minus! Sint deleniti architecto
-                        incidunt odit minima aliquid consequatur dicta necessitatibus! Ut.
+                        Wait UNtil the admin accepts you
                     </div>
                 </div>
             </div>
