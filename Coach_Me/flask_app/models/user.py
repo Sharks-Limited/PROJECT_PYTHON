@@ -155,5 +155,17 @@ class User:
         query = "UPDATE users SET first_name = %(first_name)s, last_name = %(last_name)s, email = %(email)s , picture = %(picture)s  WHERE id = %(id)s;"
         
         return connectToMySQL(DATABASE_NAME).query_db(query,data)
-        
     
+
+
+#====================ban a coach ===================
+
+    @classmethod
+    def ban_coach(cls,data_dict):
+        query= """UPDATE users SET is_banned=1 WHERE id=%(id)s"""
+        return connectToMySQL(DATABASE_NAME).query_db(query,data_dict)
+   #    ===== ==== ====    Unban coach =================
+    @classmethod
+    def unban_coach(cls,data_dict):
+        query= """UPDATE users SET is_banned=0 WHERE id=%(id)s"""
+        return connectToMySQL(DATABASE_NAME).query_db(query,data_dict)
