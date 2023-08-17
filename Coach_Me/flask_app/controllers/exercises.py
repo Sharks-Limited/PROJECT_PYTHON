@@ -7,15 +7,15 @@ from datetime import datetime
 
 @app.route('/exercises/<int:day_id>/new',methods=['POST'])
 def create_exercise(day_id):
-    if 'file' not in request.files:
-        flash('please put a gif picture','file')
-        return redirect(f'days/{day_id}/plan_your_week#edit_delete_exercice')
-    else:
-        uploaded_file = request.files['file']
-        pic = 'flask_app/static/img/' + uploaded_file.filename
-        uploaded_file.save(pic)
+    id= session['program_id']
     if Exercise.validate(request.form):
-        print("*************************************")
+        if 'file' not in request.files:
+            flash('please put a picture','file')
+            return redirect(f'days/{day_id}/plan_your_week#edit_delete_exercice')
+        else:
+            uploaded_file = request.files['file']
+            pic = 'flask_app/static/img/' + uploaded_file.filename
+            uploaded_file.save(pic)
         logged_user = User.get_by_id({'id': session['user_id']})
         data_dict = {
             **request.form,
@@ -29,7 +29,20 @@ def create_exercise(day_id):
         }
         Exercise.create_day_exercise(data_day_exercise)
         id= session['program_id']
-    # Get program details for editing
-    # coach_program = Program.get_details_coach_program_for_edit({'id': program_id})
-    # bmis = Bmi.get_bmis_not_in_program({'id': program_id})
+        
+        return redirect(f'/days/{id}/plan_your_week')
     return redirect(f'/days/{id}/plan_your_week')
+
+
+# @app.route('/exercises/<int:exercise_id>/update')
+# def update_exercise(exercise_id):
+#     if 'file' not in request.files:
+#         flash('please put a gif picture','file')
+#         return redirect(f'days/{day_id}/plan_your_week#edit_delete_exercice')
+#     else:
+#         uploaded_file = request.files['file']
+#         pic = 'flask_app/static/img/' + uploaded_file.filename
+#         uploaded_file.save(pic)
+        
+#     if Exercise.validate(request.form):
+        

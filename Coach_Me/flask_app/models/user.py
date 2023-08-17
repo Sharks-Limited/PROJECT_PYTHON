@@ -164,7 +164,7 @@ class User:
     def ban_coach(cls,data_dict):
         query= """UPDATE users SET is_banned=1 WHERE id=%(id)s"""
         return connectToMySQL(DATABASE_NAME).query_db(query,data_dict)
-   #    ===== ==== ====    Unban coach =================
+    #    ===== ==== ====    Unban coach =================
     @classmethod
     def unban_coach(cls,data_dict):
         query= """UPDATE users SET is_banned=0 WHERE id=%(id)s"""

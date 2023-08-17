@@ -274,9 +274,4 @@ def update_coach():
     
     User.update_coach(data)
     return redirect('/dashboard_coach')
-
-
-# @app.route('/coachs/block', methods=['POST'])
-# def block_coach():
-#     coach_to_block_ = User.Block(request.form['coach_id'])
     
