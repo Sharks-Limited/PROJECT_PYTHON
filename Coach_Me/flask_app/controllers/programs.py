@@ -5,7 +5,7 @@ from flask_app.models.program import Program
 from flask_app.models.user import User
 from flask_app.models.bmi import Bmi
 from flask_app.models.day import Day
-from datetime import datetime
+from datetime import datetime, timedelta
 
 # Define route for creating a new program
 @app.route('/programs/new')
@@ -42,8 +42,7 @@ def create_program():
         
         # Create a new program
         program_id = Program.create_program(data_program)
-        
-        # Loop through days and create program days
+        #Loop through days and create program days
         for i in range(1, 8):
             if f'day_off_{i}' in request.form:
                 day_off = 1
@@ -60,7 +59,7 @@ def create_program():
                 'day_off': day_off,
             }
             Day.create_program_days(data_days)
-        return redirect('/dashboard_coach')
+        return redirect(f'/programs/view/{program_id}')
     
     # Redirect back to program creation page if validation fails
     return redirect('/programs/new')
@@ -132,3 +131,7 @@ def delete(user_programs_id):
     # Delete a program
     Program.delete({'id': user_programs_id})
     return redirect('/programs')
+
+
+
+    

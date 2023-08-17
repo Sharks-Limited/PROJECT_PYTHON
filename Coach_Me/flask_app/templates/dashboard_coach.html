@@ -14,13 +14,15 @@
     
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <span class="navbar-brand">Welcome GITHUB DEV {{user.first_name}} {{user.last_name}}</span>
+            <span class="navbar-brand">Welcome {{user.first_name}} {{user.last_name}}</span>
             <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                <button class="btn border-0" type="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
                     {% if user.picture != '' %}
-                        <img class="profile_img" src="{{ url_for('static', filename=user.picture.replace('flask_app/static/', '')) }}"
+                    <div class="image-container">
+                        <img class="img-fluid" src="{{ url_for('static', filename=user.picture.replace('flask_app/static/', '')) }}"
                             alt="profile picture">
+                    </div>
                     {% else %}
                         <i class="bi bi-person-circle"></i>
                     {% endif %}

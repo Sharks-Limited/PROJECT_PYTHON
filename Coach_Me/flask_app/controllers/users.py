@@ -42,6 +42,7 @@ def dashboard_user():
         return redirect('/')
     # Get the logged-in user's information
     logged_user = User.get_by_id({'id': session['user_id']})
+    
     return render_template("dashboard_user.html", user=logged_user)
 
 
@@ -119,7 +120,6 @@ def register():
                         'weight': Decimal(weight).quantize(Decimal('0.00'), rounding=ROUND_HALF_UP),
                         'bmi': Decimal(user_bmi).quantize(Decimal('0.00'), rounding=ROUND_HALF_UP)
                     }
-            print(data_measures)
             User_measure.create_user_measure(data_measures)
         
         # Set session information and redirect based on role
@@ -285,3 +285,9 @@ def update_coach():
     
     User.update_coach(data)
     return redirect('/dashboard_coach')
+
+
+# @app.route('/coachs/block', methods=['POST'])
+# def block_coach():
+#     coach_to_block_ = User.Block(request.form['coach_id'])
+    

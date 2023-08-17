@@ -129,8 +129,12 @@
                 </td>
                 <td>
                     <div class="d-flex">
+<<<<<<< HEAD
+                        <form action="/coachs/block" method="post">
+=======
                         {% if coach.is_banned==0 %}
                         <form action="/users/block" method="post">
+>>>>>>> a5ff2994c1e17f49cddbc455e82ffc5d97fae99b
                             <input type="hidden" name="coach_id" value="{{coach.id}}">
                             <input type="submit" value="Block" class="btn btn-info">
                         </form>
