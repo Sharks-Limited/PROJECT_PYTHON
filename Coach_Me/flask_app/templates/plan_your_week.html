@@ -13,63 +13,64 @@
         <div class="d-flex justify-content-between">
             <h1>Plan My Week </h1>
             <div>
-                <a href="dashboard_coach.html" class="btn btn-primary btn-lg">My Programs</a>
+                <a href="/dashboard_coach" class="btn btn-primary btn-lg">My Programs</a>
             </div>
         </div>
         <div class="d-flex justify-content-between row m-2 mt-5">
-            {% for day in all_days%}
+            {% for day in days %}
             <div class="shadow border card col-2 p-3">
                 <div class="card-head">
-                    <h4>{{day.body_name_day}}</h4>
+                    <h2>{{day.body_name_day}}</h2>
                 </div>
+
                 <div class="card-body">
-                    
-                    <ol>
-                        <li>
-                            <!-- Button trigger modal -->
-                            <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#edit_delete_exercice">
-                                Exercice 1
-                            </button> -->
-                            <a href="#edit_delete_exercice" data-bs-toggle="modal">Exercice 1</a>
+                    {%if not day.exercices%}
+                    <p>Add exercises..</p>
+                    {%else%}
 
-                            <!-- Modal -->
-                            <div class="modal fade p-3" id="edit_delete_exercice" tabindex="-1"
-                                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
+                    <ul>
+                        {%for exercise in day.exercices%}
+
+                        <li>
+                            <a href="#edit_delete_exercice" data-bs-toggle="modal"
+                                data-bs-target="#exampleModalCenter{{exercise.id}}">{{exercise.exercice_name}}</a>
+
+                            <div class="modal fade" id="exampleModalCenter{{exercise.id}}" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content p-3">
                                         <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Exercice 1</h1>
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">
+                                                {{exercise.exercice_name}}</h1>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <form class="">
+                                            <form action="/exercises/{{exercise.id}}/update" method="post">
                                                 <h5 class="text-nowrap">Add New Exercise</h5>
                                                 <div class="form-group">
                                                     <label class="col-sm-4 text-nowrap">Exercise Name:</label>
                                                     <input class="form-control col-sm-7" type="text"
-                                                        name="exercice_name">
+                                                        name="exercice_name" value="{{exercise.exercice_name}}">
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-sm-4 text-nowrap">Number of Series:</label>
                                                     <input class="form-control col-sm-7" type="number"
-                                                        name="Number_of_series">
+                                                        name="num_of_series" value="{{exercise.num_of_series}}">
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-sm-4 text-nowrap">Number of Repetitions:</label>
                                                     <input class="form-control col-sm-7" type="number"
-                                                        name="Number_of_repetitions">
+                                                        name="num_of_reps" value="{{exercise.num_of_reps}}">
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-sm-4 text-nowrap">Upload Example:</label>
-                                                    <input class="form-control col-sm-7" type="file"
-                                                        name="Upload_example">
+                                                    <input class="form-control col-sm-7" type="file" name="file">
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-sm-4">Description:</label>
                                                     <textarea class="form-control col-sm-7" name="description" cols="15"
-                                                        rows="3"></textarea>
+                                                        rows="3">{{exercise.description}}</textarea>
                                                 </div>
                                             </form>
                                         </div>
@@ -82,71 +83,20 @@
                                 </div>
                             </div>
                         </li>
-                        <li>
-                            <!-- Button trigger modal -->
-                            <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#edit_delete_exercice">
-                                Exercice 1
-                            </button> -->
-                            <a href="#edit_delete_exercice" data-bs-toggle="modal">Exercice 2</a>
+                        {%endfor%}
+                    </ul>
 
-                            <!-- Modal -->
-                            <div class="modal fade p-3" id="edit_delete_exercice" tabindex="-1"
-                                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content p-3">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Exercice 1</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form class="">
-                                                <h5 class="text-nowrap">Add New Exercise</h5>
-                                                <div class="form-group">
-                                                    <label class="col-sm-4 text-nowrap">Exercise Name:</label>
-                                                    <input class="form-control col-sm-7" type="text"
-                                                        name="exercice_name">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-sm-4 text-nowrap">Number of Series:</label>
-                                                    <input class="form-control col-sm-7" type="number"
-                                                        name="Number_of_series">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-sm-4 text-nowrap">Number of Repetitions:</label>
-                                                    <input class="form-control col-sm-7" type="number"
-                                                        name="Number_of_repetitions">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-sm-4 text-nowrap">Upload Example:</label>
-                                                    <input class="form-control col-sm-7" type="file"
-                                                        name="Upload_example">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-sm-4">Description:</label>
-                                                    <textarea class="form-control col-sm-7" name="description" cols="15"
-                                                        rows="3"></textarea>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Delete</button>
-                                            <button type="button" class="btn btn-primary">Save changes</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ol>
+                    {%endif%}
+                </div>
+
+                <div class="card-footer">
                     <div class="d-flex justify-content-end">
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
-                            data-bs-target="#add_new_exercice">+</button>
-
+                            data-bs-target="#add_new_exercice{{day.id}}">+</button>
+                        
                         <!-- Modal -->
-                        <div class="modal fade p-3" id="add_new_exercice" tabindex="-1"
+                        <div class="modal fade p-3" id="add_new_exercice{{day.id}}" tabindex="-1"
                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content p-3 w-100">
@@ -158,59 +108,90 @@
                                     <div class="modal-body">
                                         <div class="container d-flex justify-content-around">
                                             <div class="col-5">
-                                                <form class="">
+                                                <form action="/exercises/{{day.id}}/new" method="post"
+                                                    enctype="multipart/form-data">
                                                     <h5 class="text-nowrap">Add New Exercise</h5>
                                                     <div class="form-group">
                                                         <label class="col-sm-4 text-nowrap">Exercise Name:</label>
                                                         <input class="form-control col-sm-7" type="text"
                                                             name="exercice_name">
+                                                        {% for message in
+                                                        get_flashed_messages(category_filter=["exercice_name"])
+                                                        %}
+                                                        <span class="text-danger">{{message}}</span>
+                                                        {% endfor %}
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="col-sm-4 text-nowrap">Number of Series:</label>
                                                         <input class="form-control col-sm-7" type="number"
-                                                            name="Number_of_series">
+                                                            name="num_of_series">
+                                                        {% for message in
+                                                        get_flashed_messages(category_filter=["num_of_series"])
+                                                        %}
+                                                        <span class="text-danger">{{message}}</span>
+                                                        {% endfor %}
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="col-sm-4 text-nowrap">Number of
                                                             Repetitions:</label>
                                                         <input class="form-control col-sm-7" type="number"
-                                                            name="Number_of_repetitions">
+                                                            name="num_of_reps">
+                                                        {% for message in
+                                                        get_flashed_messages(category_filter=["num_of_reps"])
+                                                        %}
+                                                        <span class="text-danger">{{message}}</span>
+                                                        {% endfor %}
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="col-sm-4 text-nowrap">Upload Example:</label>
-                                                        <input class="form-control col-sm-7" type="file"
-                                                            name="Upload_example">
+                                                        <input class="form-control col-sm-7" type="file" name="file">
+                                                        {% for message in
+                                                        get_flashed_messages(category_filter=["file"])
+                                                        %}
+                                                        <span class="text-danger">{{message}}</span>
+                                                        {% endfor %}
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="col-sm-4">Description:</label>
                                                         <textarea class="form-control col-sm-7" name="description"
                                                             cols="15" rows="3"></textarea>
+                                                        {% for message in
+                                                        get_flashed_messages(category_filter=["description"])
+                                                        %}
+                                                        <span class="text-danger">{{message}}</span>
+                                                        {% endfor %}
                                                     </div>
+                                                    <input type="submit" value="Add" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">
                                                 </form>
 
                                             </div>
                                             <div class="col-5">
                                                 <div>
                                                     <h5>Choose from existing Exercices</h5>
-                                                    <Label>Choose your exercice :</Label>
-                                                    <select name="exercices_list" id="">
-                                                        <option value="">exercice 1</option>
-                                                        <option value="">exercice 2</option>
-                                                        <option value="">exercice 3</option>
-                                                    </select>
+                                                    <form action="" method="post">
+                                                        <Label>Choose your exercice :</Label>
+                                                        <select name="exercices_list" id="">
+                                                            <option value="">exercice 1</option>
+                                                            <option value="">exercice 2</option>
+                                                            <option value="">exercice 3</option>
+                                                        </select>
+                                                        <input type="submit" value="Add" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Add</button>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
             {%endfor%}
         </div>

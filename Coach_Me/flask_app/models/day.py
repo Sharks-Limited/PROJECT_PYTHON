@@ -9,6 +9,9 @@ class Day:
         self.program_id = data_dict['program_id']
         self.body_name_day = data_dict['body_name_day']
         self.day_off = data_dict['day_off']
+        self.created_at = data_dict['created_at']
+        self.updated_at = data_dict['updated_at']
+        self.exercices =[]
     
     @classmethod
     def get_all_days(cls):
@@ -31,7 +34,7 @@ class Day:
     
     @classmethod
     def get_all_prog_days(cls,data_dict):
-        query="""SELECT * from days where program_id=%(program_id)s and day_off=0;"""
+        query="""SELECT * from days where program_id=%(id)s and day_off=0;"""
         results = connectToMySQL(DATABASE_NAME).query_db(query,data_dict)
         days = []
         for row in results:
@@ -54,3 +57,29 @@ class Day:
                     
         return connectToMySQL(DATABASE_NAME).query_db(query,data_dict)
     
+    @classmethod
+    def get_all_days_exercices(cls,data_dict):
+        query="""SELECT * from exercices
+                    join exercices_has_days on exercices.id = exercices_has_days.exercice_id
+                    join days on days.id = exercices_has_days.day_id
+                    where days.id=%(day_id)s;"""
+        results = connectToMySQL(DATABASE_NAME).query_db(query,data_dict)
+        if not results:
+            return False
+        day = cls(results[0])
+        for row in results:
+            day_exercices = {
+                'id':row['exercices.id'],
+                'coach_id':row['coach_id'],
+                'exercice_name':row['exercice_name'],
+                'num_of_series': row['num_of_series'],
+                'num_of_reps':row['num_of_reps'],
+                'description':row['description'],
+                'exercice_picture':row['exercice_picture'],
+                'created_at':row['exercices.created_at'],
+                'updated_at':row['exercices.updated_at']
+            }
+            
+            day.exercices.append(day_exercices)
+        return day
+        

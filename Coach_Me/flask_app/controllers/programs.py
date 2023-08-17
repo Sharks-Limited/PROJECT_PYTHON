@@ -72,7 +72,7 @@ def details_program(program_id):
         return redirect('/')
     if session['role'] != 'c':
         return redirect('/')
-    
+    session['program_id']=program_id
     # Get user program details and logged-in user's information
     coach_program = Program.get_details_coach_program({'id': program_id})
     return render_template('details_program.html', program=coach_program)
@@ -131,7 +131,3 @@ def delete(user_programs_id):
     # Delete a program
     Program.delete({'id': user_programs_id})
     return redirect('/programs')
-
-
-
-    

@@ -15,7 +15,6 @@ bcrypt = Bcrypt(app)
 # Define route for the homepage
 @app.route('/')
 def index():
-    session.clear()
     return render_template("index.html")
 
 # Define route for the coach dashboard
@@ -44,16 +43,6 @@ def dashboard_user():
     logged_user = User.get_by_id({'id': session['user_id']})
     
     return render_template("dashboard_user.html", user=logged_user)
-
-
-
-
-
-
-
-
-
-
 
 # Define route for the admin dashboard
 @app.route('/dashboard_admin')
