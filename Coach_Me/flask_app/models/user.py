@@ -20,6 +20,7 @@ class User:
         self.picture = data_dict['picture']
         self.created_at = data_dict['created_at']
         self.updated_at = data_dict['updated_at']
+        self.programs=[]
 
     @classmethod
     def create_user(cls, data_dict):
@@ -169,3 +170,4 @@ class User:
     def unban_coach(cls,data_dict):
         query= """UPDATE users SET is_banned=0 WHERE id=%(id)s"""
         return connectToMySQL(DATABASE_NAME).query_db(query,data_dict)
+    
