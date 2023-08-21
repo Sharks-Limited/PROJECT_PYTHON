@@ -21,12 +21,3 @@ def plan_week(program_id):
             for exercice in exercices:
                 day.exercices.append(exercice)
     return render_template('plan_your_week.html',coach_exercices=all_exercises, days=all_days, user_first_name=session['user_first_name'])
-
-@app.route('/users/user_view/<int:program_id>')
-def view_user_prog(program_id):
-    all_days = Day.get_days_of_program({'program_id':program_id})
-    for day in all_days:
-        exercices = Exercise.get_all_days_exercices({'day_id':day.id})
-        for exercice in exercices:
-                day.exercices.append(exercice)
-    return render_template('my_program.html',days=all_days)

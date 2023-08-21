@@ -209,7 +209,7 @@
 
                                 <!-- Modal -->
                                 <div class="modal fade p-3" id="add_new_exercice{{day.id}}" tabindex="-1"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    aria-labelledby="exampleModalLabel" data-bs-keyboard="false" aria-hidden="true" data-bs-backdrop="static">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content p-3 w-100">
                                             <div class="modal-header">
@@ -276,8 +276,7 @@
                                                                 <span class="text-danger">{{message}}</span>
                                                                 {% endfor %}
                                                             </div>
-                                                            <input type="submit" value="Add" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal">
+                                                            <input type="submit" value="Add" class="btn btn-secondary">
                                                         </form>
                                                     </div>
                                                     <div class="col-6 border border-1">

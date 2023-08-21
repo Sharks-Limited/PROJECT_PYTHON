@@ -2,6 +2,8 @@
 from decimal import Decimal, ROUND_HALF_UP
 from flask import render_template, redirect, request, flash, session
 from flask_app import app
+from flask_app.models.day import Day
+from flask_app.models.exercise import Exercise
 from flask_app.models.user import User
 from flask_app.models.bmi import Bmi
 from flask_app.models.program import Program
@@ -283,7 +285,6 @@ def update_coach():
     pic = 'flask_app/static/img/' + uploaded_file.filename
     uploaded_file.save(pic)
     print(request.form)
-    
     data= {
             **request.form,
             'picture': pic,
@@ -294,7 +295,14 @@ def update_coach():
     return redirect('/dashboard_coach')
 
 
-# @app.route('/coachs/block', methods=['POST'])
-# def block_coach():
-#     coach_to_block_ = User.Block(request.form['coach_id'])
+@app.route('/users/user_view/<int:program_id>')
+def view_user_prog(program_id):
+    logged_user = User.get_by_id({'id': session['user_id']})
+    all_days = Day.get_days_of_program({'program_id':program_id})
+    for day in all_days:
+        exercices = Exercise.get_all_days_exercices({'day_id':day.id})
+        if exercices!=False:
+            for exercice in exercices:
+                    day.exercices.append(exercice)
+    return render_template('my_program.html',user=logged_user,days=all_days)
     
