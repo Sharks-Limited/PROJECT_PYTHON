@@ -105,3 +105,13 @@ class Day:
         query = """delete from days where program_id=%(program_id)s;"""
         return connectToMySQL(DATABASE_NAME).query_db(query,data_dict)
         
+        
+    @classmethod
+    def get_days_of_program(cls,data_dict):
+        query="""SELECT * from days where program_id=%(program_id)s;"""
+        results = connectToMySQL(DATABASE_NAME).query_db(query,data_dict)
+        days = []
+        for row in results:
+            day = cls(row)
+            days.append(day)
+        return days

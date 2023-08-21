@@ -19,6 +19,7 @@ class Program:
         self.category_name=""
         self.days = []
         self.enrolled=[]
+        self.coach_picture=""
     
     @classmethod
     def get_all_programs(cls):
@@ -162,3 +163,16 @@ class Program:
                 return enrolled
         return False
     
+    
+    @classmethod
+    def get_coaches_by_bmi_program(cls,data_dict):
+        query = """select * from programs
+                join users on programs.coach_id = users.id where programs.bmi_id=%(bmi_id)s;"""
+        results= connectToMySQL(DATABASE_NAME).query_db(query,data_dict)
+        programs = []
+        for row in results:
+            program = cls(row)
+            program.coach_name=f"{row['first_name']} {row['last_name']}"
+            program.coach_picture = row['picture']
+            programs.append(program)
+        return programs
