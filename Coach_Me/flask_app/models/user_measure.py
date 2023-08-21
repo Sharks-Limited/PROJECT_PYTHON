@@ -16,11 +16,3 @@ class User_measure:
         query = """INSERT INTO user_measures (user_id, bmi_id, height, weight,bmi)
                     VALUES (%(user_id)s,%(bmi_id)s,%(height)s,%(weight)s,%(bmi)s);"""
         return connectToMySQL(DATABASE_NAME).query_db(query, data_dict)
-    
-    #--------------------------------------------------------------
-    @classmethod
-    def get_bmi(cls,data_dict):
-        query="""select * from user_measures where user_id=%(user_id)s"""
-        result= connectToMySQL(DATABASE_NAME).query_db(query, data_dict)
-        user_measure = cls(result[0])
-        return user_measure

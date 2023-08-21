@@ -20,7 +20,6 @@ class User:
         self.picture = data_dict['picture']
         self.created_at = data_dict['created_at']
         self.updated_at = data_dict['updated_at']
-        self.programs=[]
 
     @classmethod
     def create_user(cls, data_dict):
@@ -95,10 +94,10 @@ class User:
     def validate_register(data_dict):
         is_valid = True
         if data_dict['role']=="u" and len(data_dict['weight'])==0:
-            flash("your weight is required", "weight")
+            flash("Your weight is required", "weight")
             is_valid = False
         if data_dict['role']=="u" and len(data_dict['height'])==0:
-            flash("your height is required", "height")
+            flash("Your height is required", "height")
             is_valid = False
         if data_dict['role']=="":
             flash("Role is required", "role")
@@ -165,9 +164,8 @@ class User:
     def ban_coach(cls,data_dict):
         query= """UPDATE users SET is_banned=1 WHERE id=%(id)s"""
         return connectToMySQL(DATABASE_NAME).query_db(query,data_dict)
-    #    ===== ==== ====    Unban coach =================
+   #    ===== ==== ====    Unban coach =================
     @classmethod
     def unban_coach(cls,data_dict):
         query= """UPDATE users SET is_banned=0 WHERE id=%(id)s"""
         return connectToMySQL(DATABASE_NAME).query_db(query,data_dict)
-    

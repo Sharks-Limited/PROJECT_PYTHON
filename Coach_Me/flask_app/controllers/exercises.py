@@ -11,7 +11,7 @@ def create_exercise(day_id):
     if Exercise.validate(request.form):
         if 'file' not in request.files:
             flash('please put a picture','file')
-            return redirect(f'days/{day_id}/plan_your_week#edit_delete_exercice')
+            return redirect(f'days/{id}/plan_your_week#edit_delete_exercice')
         else:
             uploaded_file = request.files['file']
             pic = 'flask_app/static/img/' + uploaded_file.filename
@@ -28,21 +28,51 @@ def create_exercise(day_id):
             'day_id':day_id
         }
         Exercise.create_day_exercise(data_day_exercise)
-        id= session['program_id']
         
         return redirect(f'/days/{id}/plan_your_week')
     return redirect(f'/days/{id}/plan_your_week')
 
+@app.route('/exercises/<int:exercise_id>/update', methods=['POST'])
+def update_exercise(exercise_id):
+    id= session['program_id']
+    if Exercise.validate(request.form):
+        if request.files['file']=="":
+            flash('please put a picture','file')
+            return redirect(f'days/{id}/plan_your_week#edit_delete_exercice')
+        else:
+            uploaded_file = request.files['file']
+            pic = 'flask_app/static/img/' + uploaded_file.filename
+            uploaded_file.save(pic)
+            
+            data_exercise={
+                'exercice_id':exercise_id,
+                'exercice_name':request.form["exercice_name"],
+                'num_of_reps':int(request.form["num_of_reps"]),
+                'num_of_series':int(request.form["num_of_series"]),
+                'description':request.form["description"],
+                'exercice_picture':pic
+            }
+            Exercise.update_exercise(data_exercise)
+            return redirect(f'/days/{id}/plan_your_week')
+    return redirect(f'/days/{id}/plan_your_week')
 
-# @app.route('/exercises/<int:exercise_id>/update')
-# def update_exercise(exercise_id):
-#     if 'file' not in request.files:
-#         flash('please put a gif picture','file')
-#         return redirect(f'days/{day_id}/plan_your_week#edit_delete_exercice')
-#     else:
-#         uploaded_file = request.files['file']
-#         pic = 'flask_app/static/img/' + uploaded_file.filename
-#         uploaded_file.save(pic)
-        
-#     if Exercise.validate(request.form):
-        
+@app.route('/exercises/<int:day_id>/new_from_existing',methods=['POST'])
+def add_from_existing_exercises(day_id):
+    id= session['program_id']
+    data_day_exercise ={
+        'day_id':day_id,
+        'exercice_id':request.form['exercices_list']
+    }
+    Exercise.create_day_exercise(data_day_exercise)
+    return redirect(f'/days/{id}/plan_your_week')
+
+@app.route('/exercises/delete',methods=['POST'])
+def delete_day_exercise():
+    
+    id=session['program_id']
+    data= {
+        **request.form
+    }
+    Exercise.delete_exercise_day(data)
+    return redirect(f'/days/{id}/plan_your_week')
+    

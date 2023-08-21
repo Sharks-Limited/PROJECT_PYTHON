@@ -18,7 +18,7 @@ class Program:
         self.bmi={}
         self.category_name=""
         self.days = []
-        self.coach_name =""
+        self.enrolled=[]
     
     @classmethod
     def get_all_programs(cls):
@@ -55,9 +55,9 @@ class Program:
     @classmethod
     def get_details_coach_program(cls,data_dict):
         query="""SELECT * from programs
-                    join bmis on bmis.id = programs.bmi_id
-                    join days on days.program_id =programs.id
-                    where programs.id=%(id)s;"""
+                    left join bmis on bmis.id = programs.bmi_id
+                    left join days on days.program_id =programs.id
+                    where programs.id=%(id)s"""
         results = connectToMySQL(DATABASE_NAME).query_db(query,data_dict)
         program = cls(results[0])
         program.category_name = results[0]['category_name']
@@ -79,7 +79,7 @@ class Program:
         query="""SELECT * from programs
                     join bmis on bmis.id = programs.bmi_id
                     join days on days.program_id =programs.id
-                    where programs.id=%(id)s;"""
+                    where programs.id=%(id)s"""
         results = connectToMySQL(DATABASE_NAME).query_db(query,data_dict)
         program = cls(results[0])
         program.bmi = {
@@ -104,7 +104,7 @@ class Program:
     @classmethod
     def get_one_program(cls,data_dict):
         query="""SELECT * from programs
-                    where id=%(id)s;"""
+                    where id=%(id)s"""
         results = connectToMySQL(DATABASE_NAME).query_db(query,data_dict)
         prog = cls(results[0])
         return prog
@@ -139,21 +139,26 @@ class Program:
         return connectToMySQL(DATABASE_NAME).query_db(query,data_dict)
     
     @classmethod
-    def delete(cls,data_dict):
-        query = """delete from recipes where id=%(id)s;"""
+    def delete_program(cls,data_dict):
+        query = """delete from programs where id=%(id)s;"""
         return connectToMySQL(DATABASE_NAME).query_db(query,data_dict)
     
-    #--------------------------------------------
     @classmethod
-    def get_coaches_by_bmi_program(cls,data_dict):
-        query = """select * from programs
-                join users on programs.coach_id = users.id where programs.bmi_id=%(bmi_id)s;"""
-        results= connectToMySQL(DATABASE_NAME).query_db(query,data_dict)
-        programs = []
-        for row in results:
-            program = cls(row)
-            program.coach_name=f"{row['first_name']} {row['last_name']}"
-            programs.append(program)
-        return programs
+    def get_enrolling_users(cls,data_dict):
+        query="""select * from enrollings where program_id=%(program_id)s;"""
+        results = connectToMySQL(DATABASE_NAME).query_db(query,data_dict)
+        if results:
+            return True
+        return False
     
+    @classmethod
+    def get_enrolled(cls,data_dict):
+        query="""select count(*) as num_enrolled from enrollings where program_id=%(program_id)s;"""
+        result= connectToMySQL(DATABASE_NAME).query_db(query,data_dict)
+        enrolled=[]
+        if result:
+            for row in result:
+                enrolled.append(row)
+                return enrolled
+        return False
     

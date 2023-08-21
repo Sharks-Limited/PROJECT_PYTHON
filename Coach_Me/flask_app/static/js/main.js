@@ -53,6 +53,17 @@ function toggleInput(checkbox, inputId) {
     }
 }
 
+function toggleInput_for_update(checkbox, inputId) {
+    const input = document.getElementById(inputId);
+    if (checkbox.checked) {
+        input.style.pointerEvents = 'none';
+        
+    } else {
+        input.style.pointerEvents = 'auto';
+        input.focus()
+    }
+}
+
 function updateProfilePicture(input) {
     const file = input.files[0];
     const profilePicture = document.getElementById('profilePicture');

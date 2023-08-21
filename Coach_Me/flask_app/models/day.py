@@ -41,6 +41,16 @@ class Day:
             day = cls(row)
             days.append(day)
         return days
+    
+    @classmethod
+    def get_all_prog_days_for_update(cls,data_dict):
+        query="""SELECT * from days where program_id=%(id)s;"""
+        results = connectToMySQL(DATABASE_NAME).query_db(query,data_dict)
+        days = []
+        for row in results:
+            day = cls(row)
+            days.append(day)
+        return days
         
     
     @classmethod
@@ -53,7 +63,7 @@ class Day:
     def update_program_days(cls,data_dict):
         query= """UPDATE days 
                     SET body_name_day=%(body_name_day)s,day_off=%(day_off)s 
-                    WHERE program_id=%(program_id)s and id=%(id)s"""
+                    WHERE program_id=%(program_id)s and id=%(id)s;"""
                     
         return connectToMySQL(DATABASE_NAME).query_db(query,data_dict)
     
@@ -85,11 +95,13 @@ class Day:
     
     
     @classmethod
-    def get_days_of_program(cls,data_dict):
-        query="""SELECT * from days where program_id=%(program_id)s;"""
-        results = connectToMySQL(DATABASE_NAME).query_db(query,data_dict)
-        days = []
-        for row in results:
-            day = cls(row)
-            days.append(day)
-        return days
+    def update_day_off(cls,data_dict):
+        query="""update days set body_name_day='' where body_name_day=%(body_name_day)s
+                    and day_off=%(day_off)s and program_id=%(program_id)s;"""
+        return connectToMySQL(DATABASE_NAME).query_db(query,data_dict)
+    
+    @classmethod
+    def delete_program_days(cls,data_dict):
+        query = """delete from days where program_id=%(program_id)s;"""
+        return connectToMySQL(DATABASE_NAME).query_db(query,data_dict)
+        
