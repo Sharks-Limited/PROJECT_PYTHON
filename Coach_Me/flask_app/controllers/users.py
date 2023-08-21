@@ -55,7 +55,6 @@ def dashboard_user():
         return redirect('/')
     # Get the logged-in user's information
     logged_user = User.get_by_id({'id': session['user_id']})
-    
     bmi_user = User_measure.get_bmi({'user_id':logged_user.id})
     all_coaches_by_bmi_program = Program.get_coaches_by_bmi_program({'bmi_id':bmi_user.bmi_id})
     return render_template("dashboard_user.html", user=logged_user, all_programs= all_coaches_by_bmi_program)
