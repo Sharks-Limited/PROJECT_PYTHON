@@ -76,6 +76,28 @@ class Program:
         return program
     
     @classmethod
+    def get_details_days_coach_program(cls,data_dict):
+        query="""SELECT * from programs
+                    left join bmis on bmis.id = programs.bmi_id
+                    left join days on days.program_id =programs.id
+                    where programs.id=%(id)s and day_off=0"""
+        results = connectToMySQL(DATABASE_NAME).query_db(query,data_dict)
+        program = cls(results[0])
+        program.category_name = results[0]['category_name']
+        for row in results:
+            data_days ={
+                'id':row['days.id'],
+                'program_id':row['program_id'],
+                'body_name_day':row['body_name_day'],
+                'day_off':row['day_off'],
+                'created_at':row['created_at'],
+                'updated_at':row['updated_at']
+            }
+            
+            program.days.append(Day(data_days))
+        return program
+    
+    @classmethod
     def get_details_coach_program_for_edit(cls,data_dict):
         query="""SELECT * from programs
                     join bmis on bmis.id = programs.bmi_id
