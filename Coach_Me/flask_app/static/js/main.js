@@ -52,3 +52,26 @@ function toggleInput(checkbox, inputId) {
         input.disabled = false;
     }
 }
+
+function toggleInput_for_update(checkbox, inputId) {
+    const input = document.getElementById(inputId);
+    if (checkbox.checked) {
+        input.style.pointerEvents = 'none';
+        
+    } else {
+        input.style.pointerEvents = 'auto';
+        input.focus()
+    }
+}
+
+function updateProfilePicture(input) {
+    const file = input.files[0];
+    const profilePicture = document.getElementById('profilePicture');
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+        profilePicture.src = e.target.result;
+    };
+
+    reader.readAsDataURL(file);
+}

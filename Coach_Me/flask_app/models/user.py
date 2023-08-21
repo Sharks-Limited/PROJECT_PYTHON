@@ -94,10 +94,10 @@ class User:
     def validate_register(data_dict):
         is_valid = True
         if data_dict['role']=="u" and len(data_dict['weight'])==0:
-            flash("your weight is required", "weight")
+            flash("Your weight is required", "weight")
             is_valid = False
         if data_dict['role']=="u" and len(data_dict['height'])==0:
-            flash("your height is required", "height")
+            flash("Your height is required", "height")
             is_valid = False
         if data_dict['role']=="":
             flash("Role is required", "role")
@@ -130,3 +130,42 @@ class User:
         
         return is_valid
     
+
+    #==========Validate caoch===========
+    @staticmethod
+    def coach_validate_update(data_dict):
+        is_valid = True
+        if len(data_dict['first_name'])< 2:
+            
+            flash("First Name too short", "first_name")
+            is_valid = False
+        
+        if len(data_dict['last_name'])< 2:
+            flash("Last Name too short .....", "last_name")
+            is_valid = False
+
+        if not EMAIL_REGEX.match(data_dict['email']): 
+            flash("Invalid email address!", "email")
+            is_valid = False
+        return is_valid
+#====================Update Coach==========================
+    @classmethod
+    
+    def update_coach(cls,data):
+        query = "UPDATE users SET first_name = %(first_name)s, last_name = %(last_name)s, email = %(email)s , picture = %(picture)s  WHERE id = %(id)s;"
+        
+        return connectToMySQL(DATABASE_NAME).query_db(query,data)
+    
+
+
+#====================ban a coach ===================
+
+    @classmethod
+    def ban_coach(cls,data_dict):
+        query= """UPDATE users SET is_banned=1 WHERE id=%(id)s"""
+        return connectToMySQL(DATABASE_NAME).query_db(query,data_dict)
+   #    ===== ==== ====    Unban coach =================
+    @classmethod
+    def unban_coach(cls,data_dict):
+        query= """UPDATE users SET is_banned=0 WHERE id=%(id)s"""
+        return connectToMySQL(DATABASE_NAME).query_db(query,data_dict)
