@@ -13,7 +13,6 @@ def program_new():
     # Check user session and role
     if not 'user_id' in session:
         return redirect('/')
-    
     if session['role'] != 'c':
         return redirect('/')
     
