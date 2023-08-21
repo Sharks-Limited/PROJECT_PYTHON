@@ -30,6 +30,12 @@
     font-weight: bold;
 }
 
-span {
-    style: none;
+.profile-picture-container {
+    max-width: 200px; /* Adjust the desired max width */
+    margin: 0 auto; /* Center the image horizontally */
+}
+
+.profile-picture {
+    max-width: 100%;
+    height: auto;
 }

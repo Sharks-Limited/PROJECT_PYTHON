@@ -306,3 +306,9 @@ def view_user_prog(program_id):
                     day.exercices.append(exercice)
     return render_template('my_program.html',user=logged_user,days=all_days)
     
+@app.route('/users/show',methods=['POST'])
+def show_trainee():
+    
+    logged_user = User.get_by_id({'id':request.form['user']})
+
+    return render_template('show_trainee.html',user=logged_user)

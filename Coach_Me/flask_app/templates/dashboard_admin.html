@@ -173,6 +173,7 @@
                         <td>{{user.first_name}} {{user.last_name}}</td>
                         <td>
                             <div class="d-flex justify-content-around align-items-center">
+                                <!-- <a href="/users/show">show user</a> -->
                                 <form action="/users/show" method="post">
                                     <input type="hidden" name="user" value="{{user.id}}">
                                     <input type="submit" value="Show User" class="btn btn-info">
