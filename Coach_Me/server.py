@@ -1,7 +1,7 @@
 from flask_app import app
 
 # ! Don't forget to import all controllers here 
-from flask_app.controllers import users,user_measures,programs,days,exercises
+from flask_app.controllers import users,user_measures,programs,days,exercises,enrollings
 
 
 if __name__ == '__main__':

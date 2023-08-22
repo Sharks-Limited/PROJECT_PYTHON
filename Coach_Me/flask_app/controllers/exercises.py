@@ -73,6 +73,7 @@ def delete_day_exercise():
     data= {
         **request.form
     }
-    Exercise.delete_exercise_day(data)
+    # Exercise.get_exercice_to_delete(data)
+    Exercise.delete_only_exercise_day(data)
     return redirect(f'/days/{id}/plan_your_week')
     

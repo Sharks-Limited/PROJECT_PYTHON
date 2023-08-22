@@ -54,7 +54,8 @@
                             <!-- <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
                             <li class="scroll-to-section"><a href="#trainers">Our Coachs</a></li> -->
                             <!-- <li class="scroll-to-section"><a href="">create</a></li>  -->
-                            <li class="scroll-to-section"><a href="">Welcome <span class="text-danger">{{user.first_name}}</span></a></li>
+                            <li class="scroll-to-section"><a href="">Welcome <span
+                                        class="text-danger">{{user.first_name}}</span></a></li>
                             <li class="main-button scroll-to-section">
                                 <form action="/logout" method="post">
                                     <input type="submit" value="Logout" class="btn btn-danger">
@@ -82,6 +83,7 @@
                         <div class="col-lg-6 offset-lg-3">
                             <div class="section-heading">
                                 <h2 class="text-light">Your <em>program</em></h2>
+                                <h2 class="text-light">End: {{ last_day.strftime('%B %d, %Y') }}</h2>
                             </div>
                         </div>
                     </div>
@@ -94,9 +96,9 @@
                                     <a href='#tabs{{day.id}}'><img
                                             src="{{ url_for('static', filename='assets/images/tabs-first-icon.png') }}"
                                             alt="">
-                                            <span class="text-danger">day off</span>
+                                        <span class="text-info">day off</span>
                                     </a>
-                                    
+
                                 </li>
                                 {%else%}
                                 <li>
@@ -108,7 +110,7 @@
                                 {%endif%}
                                 {%endfor%}
                             </ul>
-        
+
                         </div>
                         <div class="col-lg-8">
                             <section class='tabs-content'>
@@ -120,16 +122,26 @@
                                     <ul>
                                         {%for exercise in day.exercices%}
                                         <li>
-                                            <div class="card mb-3">
-                                                <img src="{{ url_for('static', filename=exercise.exercice_picture.replace('flask_app/static/', '')) }}" class="card-img-top" alt="Exercise Image">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">{{exercise.exercice_name}}</h5>
-                                                    <p class="card-text">Description: {{exercise.description}}</p>
-                                                </div>
-                                                <ul class="list-group list-group-flush">
-                                                    <li class="list-group-item"><strong>Sets:</strong> {{exercise.num_of_series}}</li>
-                                                    <li class="list-group-item"><strong>Reps:</strong> {{exercise.num_of_reps}}</li>
-                                                </ul>
+                                            <div class="card w-100 h-50 mb-1">
+                                                <h2 class="card-title text-center"><strong>Exercise Name:</strong> {{exercise.exercice_name}}</h5>
+                                                    <div class="d-flex justify-content-around">
+                                                        <ul class="list-group list-group-flush">
+                                                            <li class="list-group-item"><strong>Number of series:</strong>
+                                                                {{exercise.num_of_series}}</li>
+                                                            <li class="list-group-item"><strong>you will repeat it:</strong>
+                                                                {{exercise.num_of_reps}} <strong>times</strong></li>
+                                                        </ul>
+                                                        <img src="{{ url_for('static', filename=exercise.exercice_picture.replace('flask_app/static/', '')) }}"
+                                                            class="card-img-top w-25" alt="Exercise Image">
+                                                    </div>
+
+                                                    <div class="card-body">
+                                                        <ul class="list-group list-group-flush">
+                                                            <li class="list-group-item"><strong>Description:</strong>
+                                                                {{exercise.description}}</li>
+                                                        </ul>
+                                                    </div>
+                                                    
                                             </div>
                                         </li>
                                         {%endfor%}
@@ -141,9 +153,9 @@
                         </div>
                     </div>
                 </div>
-        
+
             </section>
-        
+
             <!-- WORK HERE -->
         </div>
     </section>

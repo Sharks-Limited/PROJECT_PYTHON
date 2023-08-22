@@ -189,7 +189,8 @@ class Program:
     @classmethod
     def get_coaches_by_bmi_program(cls,data_dict):
         query = """select * from programs
-                join users on programs.coach_id = users.id where programs.bmi_id=%(bmi_id)s;"""
+                join users on programs.coach_id = users.id where programs.bmi_id=%(bmi_id)s
+                and programs.id not in (select program_id from enrollings);"""
         results= connectToMySQL(DATABASE_NAME).query_db(query,data_dict)
         programs = []
         for row in results:

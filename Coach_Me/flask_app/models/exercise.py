@@ -76,6 +76,11 @@ class Exercise:
         query="""delete from exercices_has_days where day_id=%(day_id)s;"""
         return connectToMySQL(DATABASE_NAME).query_db(query,data_dict)
     
+    @classmethod
+    def delete_only_exercise_day(cls,data_dict):
+        query="""delete from exercices_has_days where day_id=%(day_id)s and exercice_id=%(exercise_id)s;"""
+        return connectToMySQL(DATABASE_NAME).query_db(query,data_dict)
+    
     @staticmethod
     def validate(data_dict):
         is_valid=True

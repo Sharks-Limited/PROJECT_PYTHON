@@ -5,11 +5,13 @@ from flask_app import app
 from flask_app.models.day import Day
 from flask_app.models.exercise import Exercise
 from flask_app.models.user import User
+from flask_app.models.enrolling import Enrolling
 from flask_app.models.bmi import Bmi
 from flask_app.models.program import Program
 from flask_app.models.user_measure import User_measure
 from flask_bcrypt import Bcrypt
 from math import sqrt
+from datetime import datetime,timedelta
 
 # Initialize Bcrypt for password hashing
 bcrypt = Bcrypt(app)
@@ -56,10 +58,16 @@ def dashboard_user():
     if session['role'] != "u" or 'user_id' not in session:
         return redirect('/')
     # Get the logged-in user's information
-    logged_user = User.get_by_id({'id': session['user_id']})
-    bmi_user = User_measure.get_bmi({'user_id':logged_user.id})
-    all_coaches_by_bmi_program = Program.get_coaches_by_bmi_program({'bmi_id':bmi_user.bmi_id})
-    return render_template("dashboard_user.html", user=logged_user, all_programs= all_coaches_by_bmi_program)
+    if 'prog_user' not in session:
+        logged_user = User.get_by_id({'id': session['user_id']})
+        bmi_user = User_measure.get_bmi({'user_id':logged_user.id})
+        all_coaches_by_bmi_program = Program.get_coaches_by_bmi_program({'bmi_id':bmi_user.bmi_id})
+        return render_template("dashboard_user.html", user=logged_user, all_programs= all_coaches_by_bmi_program)
+    else:
+        the_enrolling = Enrolling.get_enrolling({'program_id':session['prog_user']})
+        if the_enrolling:
+            return redirect(f'/users/user_view/{session["prog_user"]}')
+        
 
 
 
@@ -193,6 +201,8 @@ def delete_coach():
         return redirect('/')
     User.delete_coach({'id':request.form['coach_id']})
     return redirect('/dashboard_admin')
+
+
 # Define route for user logout
 @app.route('/logout', methods=['POST'])
 def logout():
@@ -304,7 +314,23 @@ def view_user_prog(program_id):
         if exercices!=False:
             for exercice in exercices:
                     day.exercices.append(exercice)
-    return render_template('my_program.html',user=logged_user,days=all_days)
+    data_enrolling={
+        'user_id':logged_user.id,
+        'program_id':program_id
+    }
+    if 'prog_user' not in session:
+        enrolling = Enrolling.get_enrolling({'program_id':session['prog_user']})
+        if not enrolling:
+            Enrolling.create_enrolling(data_enrolling)
+    
+    new_enrolling = Enrolling.get_enrolling({'program_id':program_id})
+    session['prog_user']=program_id
+    print(enrolling.__dict__)
+    prog = Program.get_one_program({'id':program_id})
+    duration_enrolling = new_enrolling.created_at + timedelta(weeks=prog.duration)
+    Enrolling.update_enrolling({'end_date':duration_enrolling,'user_id':logged_user.id})
+    # last_day = datetime.strftime(duration_enrolling,'%Y-%M-%d')
+    return render_template('my_program.html',user=logged_user,days=all_days, last_day=duration_enrolling)
     
 @app.route('/users/show',methods=['POST'])
 def show_trainee():
