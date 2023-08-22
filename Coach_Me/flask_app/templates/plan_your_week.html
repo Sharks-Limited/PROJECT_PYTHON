@@ -116,6 +116,8 @@
                                             data-bs-target="#exampleModalCenter{{exercise.id}}"><span
                                                 class="text-danger">Exercice Name:</span>
                                             {{exercise.exercice_name}}</a>
+                                            <img src="{{ url_for('static', filename=exercise.exercice_picture.replace('flask_app/static/', '')) }}"
+                                            class="card-img-top w-25" alt="Exercise Image">
 
                                     </div>
                                     <!-- Edit modal -->
