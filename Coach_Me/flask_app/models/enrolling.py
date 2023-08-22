@@ -23,15 +23,32 @@ class Enrolling:
         query="""select * from enrollings where program_id=%(program_id)s;"""
         
         result = connectToMySQL(DATABASE_NAME).query_db(query,data_dict)
-        for row in result:
-            enrolling = cls(row)
-            # print(enrolling)
-        return enrolling
+        if result:
+            for row in result:
+                enrolling = cls(row)
+                # print(enrolling)
+            return enrolling
+        return False
     
     @classmethod
     def update_enrolling(cls,data_dict):
         query="""update enrollings set end_date=%(end_date)s where user_id=%(user_id)s;"""
         return connectToMySQL(DATABASE_NAME).query_db(query,data_dict)
     
+    @classmethod
+    def get_enrolling_with_id(cls,data_dict):
+        query="""select * from enrollings where user_id=%(user_id)s;"""
         
+        result = connectToMySQL(DATABASE_NAME).query_db(query,data_dict)
+        if result:
+            for row in result:
+                enrolling = cls(row)
+                # print(enrolling)
+            return enrolling
+        return False
+    
+    @classmethod
+    def delete_enrolling(cls,data_dict):
+        query="""delete from enrollings where user_id=%(user_id)s and program_id=%(program_id)s"""
+        return connectToMySQL(DATABASE_NAME).query_db(query,data_dict)
         

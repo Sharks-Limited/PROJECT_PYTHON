@@ -58,17 +58,49 @@ def dashboard_user():
     if session['role'] != "u" or 'user_id' not in session:
         return redirect('/')
     # Get the logged-in user's information
-    if 'prog_user' not in session:
-        logged_user = User.get_by_id({'id': session['user_id']})
-        bmi_user = User_measure.get_bmi({'user_id':logged_user.id})
-        all_coaches_by_bmi_program = Program.get_coaches_by_bmi_program({'bmi_id':bmi_user.bmi_id})
-        return render_template("dashboard_user.html", user=logged_user, all_programs= all_coaches_by_bmi_program)
-    else:
-        the_enrolling = Enrolling.get_enrolling({'program_id':session['prog_user']})
-        if the_enrolling:
-            return redirect(f'/users/user_view/{session["prog_user"]}')
+    
+    logged_user = User.get_by_id({'id': session['user_id']})
+    print(logged_user)
+    enrolling = Enrolling.get_enrolling_with_id({'user_id':logged_user.id})
+    print(enrolling)
+    if enrolling:
+        return redirect(f'/users/user_view/{enrolling.program_id}')
+    bmi_user = User_measure.get_bmi({'user_id':logged_user.id})
+    all_coaches_by_bmi_program = Program.get_coaches_by_bmi_program({'bmi_id':bmi_user.bmi_id})
+    return render_template("dashboard_user.html", user=logged_user, all_programs= all_coaches_by_bmi_program)
+    
         
-
+@app.route('/users/user_view/<int:program_id>')
+def view_user_prog(program_id):
+    logged_user = User.get_by_id({'id': session['user_id']})
+    all_days = Day.get_days_of_program({'program_id':program_id})
+    for day in all_days:
+        exercices = Exercise.get_all_days_exercices({'day_id':day.id})
+        if exercices!=False:
+            for exercice in exercices:
+                    day.exercices.append(exercice)
+    data_enrolling={
+        'user_id':logged_user.id,
+        'program_id':program_id
+    }
+    old_enrolling = Enrolling.get_enrolling({'program_id':program_id})
+    if  not old_enrolling:
+        Enrolling.create_enrolling(data_enrolling)
+    
+    new_enrolling = Enrolling.get_enrolling({'program_id':program_id})
+    prog = Program.get_one_program({'id':program_id})
+    duration_enrolling = new_enrolling.created_at + timedelta(weeks=prog.duration)
+    still_have = duration_enrolling - datetime.now()
+    days = still_have.days
+    hours = still_have.seconds//3600
+    
+    enroll = Enrolling.get_enrolling({'program_id':program_id})
+    print(enroll.end_date)
+    if enroll.end_date ==None:
+        Enrolling.update_enrolling({'end_date':duration_enrolling,'user_id':logged_user.id})
+    if duration_enrolling -datetime.now()==0:
+        Enrolling.delete_enrolling({'user_id':logged_user.id,'program_id':program_id})
+    return render_template('my_program.html',still_days=days,hours=hours,user=logged_user,days=all_days, last_day=duration_enrolling)
 
 
 # Define route for the admin dashboard
@@ -304,33 +336,6 @@ def update_coach():
     User.update_coach(data)
     return redirect('/dashboard_coach')
 
-
-@app.route('/users/user_view/<int:program_id>')
-def view_user_prog(program_id):
-    logged_user = User.get_by_id({'id': session['user_id']})
-    all_days = Day.get_days_of_program({'program_id':program_id})
-    for day in all_days:
-        exercices = Exercise.get_all_days_exercices({'day_id':day.id})
-        if exercices!=False:
-            for exercice in exercices:
-                    day.exercices.append(exercice)
-    data_enrolling={
-        'user_id':logged_user.id,
-        'program_id':program_id
-    }
-    if 'prog_user' not in session:
-        enrolling = Enrolling.get_enrolling({'program_id':session['prog_user']})
-        if not enrolling:
-            Enrolling.create_enrolling(data_enrolling)
-    
-    new_enrolling = Enrolling.get_enrolling({'program_id':program_id})
-    session['prog_user']=program_id
-    print(enrolling.__dict__)
-    prog = Program.get_one_program({'id':program_id})
-    duration_enrolling = new_enrolling.created_at + timedelta(weeks=prog.duration)
-    Enrolling.update_enrolling({'end_date':duration_enrolling,'user_id':logged_user.id})
-    # last_day = datetime.strftime(duration_enrolling,'%Y-%M-%d')
-    return render_template('my_program.html',user=logged_user,days=all_days, last_day=duration_enrolling)
     
 @app.route('/users/show',methods=['POST'])
 def show_trainee():
