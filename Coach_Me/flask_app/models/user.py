@@ -68,6 +68,19 @@ class User:
         return False
     
     @classmethod
+    def get_valid_coachs_home(cls):
+        query="""SELECT * from users where role='c' and is_valid=1 limit 3;"""
+        results = connectToMySQL(DATABASE_NAME).query_db(query)
+        coachs = []
+        if results:
+            for row in results:
+                
+                coach = cls(row)
+                coachs.append(coach)
+            return coachs
+        return False
+    
+    @classmethod
     def get_all_users(cls):
         query="""SELECT * from users where role='u';"""
         results = connectToMySQL(DATABASE_NAME).query_db(query)
@@ -150,13 +163,15 @@ class User:
         return is_valid
 #====================Update Coach==========================
     @classmethod
-    
     def update_coach(cls,data):
         query = "UPDATE users SET first_name = %(first_name)s, last_name = %(last_name)s, email = %(email)s , picture = %(picture)s  WHERE id = %(id)s;"
         
         return connectToMySQL(DATABASE_NAME).query_db(query,data)
-    
-
+    @classmethod
+    def update_user(cls,data):
+        query = "UPDATE users SET first_name = %(first_name)s, last_name = %(last_name)s, email = %(email)s , picture = %(picture)s  WHERE id = %(id)s;"
+        
+        return connectToMySQL(DATABASE_NAME).query_db(query,data)
 
 #====================ban a coach ===================
 

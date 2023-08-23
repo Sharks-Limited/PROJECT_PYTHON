@@ -56,6 +56,19 @@
                             {%endif%}
                             <li class="scroll-to-section"><a href="">Welcome coach <span
                                         class="text-danger">{{user.first_name}}</span></a></li>
+
+                            <div>
+                                {% if user.picture != '' %}
+                                <div class="image-container">
+                                    <a href="/users/edit"><img class="img-fluid"
+                                            src="{{ url_for('static', filename=user.picture.replace('flask_app/static/', '')) }}"
+                                            alt="profile picture"
+                                            style="width: 50px; height: 50px; border-radius: 50%;"></a>
+                                </div>
+                                {% else %}
+                                <a href="/users/edit"><i class="bi bi-person-circle"></i></a>
+                                {% endif %}
+                            </div>
                             <li class="main-button">
                                 <form action="/logout" method="post">
                                     <input type="submit" value="Logout" class="btn btn-danger">
@@ -142,27 +155,32 @@
             <div class="container mt-4">
                 <div class="card p-4">
                     <h2 class="mb-3">Important Account Information</h2>
-            
-                    <p>Dear  <span class="text-danger">{{user.first_name}}</span>,</p>
-            
-                    <p>We regret to inform you that your coach account on Coachini has not been validated by the admin yet.</p>
-            
-                    <p><strong>Reason:</strong> Your account is currently undergoing verification to ensure the quality and accuracy of coaching content.</p>
-            
+
+                    <p>Dear <span class="text-danger">{{user.first_name}}</span>,</p>
+
+                    <p>We regret to inform you that your coach account on Coachini has not been validated by the admin
+                        yet.</p>
+
+                    <p><strong>Reason:</strong> Your account is currently undergoing verification to ensure the quality
+                        and accuracy of coaching content.</p>
+
                     <p><strong>Impact:</strong></p>
                     <ul>
                         <li>Your account will remain inactive until admin validation is complete.</li>
                         <li>You won't be able to access coaching features and programs.</li>
                     </ul>
-            
-                    <p>If you believe this validation process is taking longer than expected or if you have any questions, please don't hesitate to contact our support team at <a href="#">Choachini@support.com</a>.</p>
-            
-                    <p>Thank you for your patience and understanding. We are working to get you onboarded as soon as possible.</p>
-            
+
+                    <p>If you believe this validation process is taking longer than expected or if you have any
+                        questions, please don't hesitate to contact our support team at <a
+                            href="#">Choachini@support.com</a>.</p>
+
+                    <p>Thank you for your patience and understanding. We are working to get you onboarded as soon as
+                        possible.</p>
+
                     <p>Best regards,</p>
                 </div>
             </div>
-            
+
             {%endif%}
         </div>
 

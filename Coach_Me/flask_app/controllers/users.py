@@ -20,7 +20,9 @@ bcrypt = Bcrypt(app)
 # Define route for the homepage
 @app.route('/')
 def index():
-    return render_template("landing_page.html")
+    coachs = User.get_valid_coachs_home()
+    print(coachs)
+    return render_template("landing_page.html",coachs=coachs)
 
 # Define route for the Login and registration
 @app.route('/reg_log')
@@ -64,6 +66,7 @@ def dashboard_user():
     enrolling = Enrolling.get_enrolling_with_id({'user_id':logged_user.id})
     print(enrolling)
     if enrolling:
+        session['program_id']=enrolling.program_id
         return redirect(f'/users/user_view/{enrolling.program_id}')
     bmi_user = User_measure.get_bmi({'user_id':logged_user.id})
     all_coaches_by_bmi_program = Program.get_coaches_by_bmi_program({'bmi_id':bmi_user.bmi_id})
@@ -83,6 +86,7 @@ def view_user_prog(program_id):
         'user_id':logged_user.id,
         'program_id':program_id
     }
+    session['program_id']=program_id
     old_enrolling = Enrolling.get_enrolling({'program_id':program_id})
     if  not old_enrolling:
         Enrolling.create_enrolling(data_enrolling)
@@ -300,14 +304,37 @@ def edit_coach():
     return render_template("edit_coach.html",user=logged_user)
 
 
+@app.route('/users/edit')
+def edit_user():
+    logged_user = User.get_by_id({'id': session['user_id']})
+    return render_template("edit_user.html",user=logged_user)
 
+@app.route('/users/update',methods=['POST'])
+def update_user():
+    if 'user_id' not in session:
+        return redirect('/')
+    if not User.coach_validate_update(request.form):
+        return redirect('/edit_coach')
+    uploaded_file = request.files['file']
+    if 'file' not in request.files:
+        flash("Please provide your picture", "file")
+        return redirect('/')
+    pic = 'flask_app/static/img/' + uploaded_file.filename
+    uploaded_file.save(pic)
+    data= {
+            **request.form,
+            'picture': pic,
+            'id':session['user_id']
+        }
+    User.update_user(data)
+    logged_user = User.get_by_id({'id': session['user_id']})
+    if logged_user.role == "u":
+        return redirect('/dashboard_user')
+    return redirect('/dashboard_coach')
 
 #==================edit coach redirect to get
 @app.route('/coach/edit', methods=['POST'])
 def edit():
-    if 'user_id' not in session:
-        return redirect('/')
-    
     if session['role'] != "c":
         return redirect('/')
     return redirect("/edit_coach")
@@ -343,3 +370,11 @@ def show_trainee():
     logged_user = User.get_by_id({'id':request.form['user']})
 
     return render_template('show_trainee.html',user=logged_user)
+
+
+@app.route('/programs/leave',methods=['POST'])
+def leave_program():
+    program_id = session['program_id']
+    logged_user = User.get_by_id({'id':session['user_id']})
+    Enrolling.delete_enrolling({'user_id':logged_user.id,'program_id':program_id})
+    return redirect('/dashboard_user')

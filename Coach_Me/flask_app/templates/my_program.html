@@ -50,19 +50,37 @@
                         <a href="#top" class="logo">Coachini<em>.</em></a>
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
-                        <ul class="nav">
+                        <ul class="nav d-flex justify-content-end align-items-center">
                             <!-- <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
                             <li class="scroll-to-section"><a href="#trainers">Our Coachs</a></li> -->
                             <!-- <li class="scroll-to-section"><a href="">create</a></li>  -->
                             <li class="scroll-to-section"><a href="">Welcome <span
                                         class="text-danger">{{user.first_name}}</span></a></li>
+                            <div>
+                                {% if user.picture != '' %}
+                                <div class="image-container">
+                                    <a href="/users/edit"><img class="img-fluid"
+                                            src="{{ url_for('static', filename=user.picture.replace('flask_app/static/', '')) }}"
+                                            alt="profile picture"
+                                            style="width: 50px; height: 50px; border-radius: 50%;"></a>
+                                </div>
+                                {% else %}
+                                <a href="/users/edit"><i class="bi bi-person-circle"></i></a>
+                                {% endif %}
+                            </div>
                             <!-- <li class="main-button scroll-to-section">TEST</li> -->
                             <li class="scroll-to-section">
                                 <form action="/logout" method="post">
                                     <input type="submit" value="Logout" class="btn btn-danger">
                                 </form>
                             </li>
+                            <li class="scroll-to-section">
+                                <form action="/programs/leave" method="post">
+                                    <input type="submit" value="Leave the program" class="btn btn-danger">
+                                </form>
+                            </li>
                         </ul>
+
                         <a class='menu-trigger'>
                             <span>Menu</span>
                         </a>
@@ -124,12 +142,15 @@
                                         {%for exercise in day.exercices%}
                                         <li>
                                             <div class="card w-100 h-50 mb-1">
-                                                <h2 class="card-title text-center"><strong>Exercise Name:</strong> {{exercise.exercice_name}}</h5>
+                                                <h2 class="card-title text-center"><strong>Exercise Name:</strong>
+                                                    {{exercise.exercice_name}}</h5>
                                                     <div class="d-flex justify-content-around">
                                                         <ul class="list-group list-group-flush">
-                                                            <li class="list-group-item"><strong>Number of series:</strong>
+                                                            <li class="list-group-item"><strong>Number of
+                                                                    series:</strong>
                                                                 {{exercise.num_of_series}}</li>
-                                                            <li class="list-group-item"><strong>you will repeat it:</strong>
+                                                            <li class="list-group-item"><strong>you will repeat
+                                                                    it:</strong>
                                                                 {{exercise.num_of_reps}} <strong>times</strong></li>
                                                         </ul>
                                                         <img src="{{ url_for('static', filename=exercise.exercice_picture.replace('flask_app/static/', '')) }}"
@@ -142,7 +163,7 @@
                                                                 {{exercise.description}}</li>
                                                         </ul>
                                                     </div>
-                                                    
+
                                             </div>
                                         </li>
                                         {%endfor%}
@@ -178,13 +199,12 @@
             </div>
         </div>
     </footer>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Main JS -->
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 
     <!-- jQuery -->
-    <script src="{{ url_for('static', filename='assets/js/jquery-2.1.0.min.js') }}
-    "></script>
+    <script src="{{ url_for('static', filename='assets/js/jquery-2.1.0.min.js') }}"></script>
 
     <!-- Bootstrap -->
     <script src="{{ url_for('static', filename='assets/js/popper.js') }}"></script>

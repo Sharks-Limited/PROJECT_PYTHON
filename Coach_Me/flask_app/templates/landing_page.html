@@ -98,16 +98,16 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row d-flex justify-content-center">
+                {%for coach in coachs%}
                 <div class="col-lg-4">
                     <div class="trainer-item">
                         <div class="image-thumb">
-                            <img src="{{ url_for('static', filename='assets/images/first-trainer.jpg') }}
-                            " alt="">
+                            <img src="{{ url_for('static', filename=coach.picture.replace('flask_app/static/', '')) }}" alt="">
                         </div>
                         <div class="down-content">
-                            <span>Strength Trainer</span>
-                            <h4>Bret D. Bowers</h4>
+                            <span></span>
+                            <h4>{{coach.first_name}} {{coach.last_name}}</h4>
                             <p>With a strong background in strength training, Bret is committed to assisting you in reaching your fitness aspirations. His tailored workout plans and guidance will help you push your limits and conquer new challenges, enhancing your physical strength and endurance.</p>
                             <ul class="social-icons">
                                 <li><a href="#"><i class="fa fa-facebook"></i></a></li>
@@ -118,43 +118,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="trainer-item">
-                        <div class="image-thumb">
-                            <img src="{{ url_for('static', filename='assets/images/second-trainer.jpg') }}" alt="">
-                        </div>
-                        <div class="down-content">
-                            <span>Muscle Trainer</span>
-                            <h4>Hector T. Daigl</h4>
-                            <p>Hector specializes in muscle development and building a lean, sculpted physique. With a focus on targeted exercises and nutrition, he'll guide you on a journey to gain muscle mass, increase definition, and achieve a well-defined body that you can be proud of.</p>
-                            <ul class="social-icons">
-                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                <li><a href="#"><i class="fa fa-behance"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="trainer-item">
-                        <div class="image-thumb">
-                            <img src="{{ url_for('static', filename='assets/images/third-trainer.jpg') }}
-                            " alt="">
-                        </div>
-                        <div class="down-content">
-                            <span>Power Trainer</span>
-                            <h4>Paul D. Newman</h4>
-                            <p>Paul's expertise lies in high-intensity workouts designed to amplify your power and explosiveness. By incorporating dynamic exercises and training techniques, he'll help you unleash your inner strength, boost your athletic performance, and attain fitness results that resonate with your aspirations.</p>
-                            <ul class="social-icons">
-                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                <li><a href="#"><i class="fa fa-behance"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+                {%endfor%}
             </div>
         </div>
     </section>
